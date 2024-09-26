@@ -1,3 +1,6 @@
+Here's your **CertificationNFT** project documentation in Markdown format:
+
+```markdown
 # CertificationNFT - Based Sea Hackathon Project
 
 ## Overview
@@ -61,38 +64,50 @@ The contract is designed to mint NFTs representing certificates, containing key 
        "Blockchain Development",
        "XYZ University"
    );
-Verify a Certificate:
-Anyone can call the getCertificate function by providing a valid tokenId. This returns the certificate metadata and verifies ownership.
-solidity
-Copy code
-Certificate memory cert = contract.getCertificate(1);
-Deployment
+   ```
+
+3. **Verify a Certificate:**  
+   Anyone can call the `getCertificate` function by providing a valid tokenId. This returns the certificate metadata and verifies ownership.
+
+   ```solidity
+   Certificate memory cert = contract.getCertificate(1);
+   ```
+
+## Deployment
 
 The CertificationNFT contract is deployed on the Base Sepolia Testnet with the following contract address:
 
-Contract Address: 0xfd71381b49CA874D269eE45A84f25744a3F9433C
-Steps to Deploy
-Install Truffle or Hardhat.
-Set up a connection to the Ethereum network (e.g., via Infura or Alchemy).
-Deploy the contract to your desired network.
-javascript
-Copy code
+- **Contract Address:** 0xfd71381b49CA874D269eE45A84f25744a3F9433C
+
+### Steps to Deploy
+
+1. Install Truffle or Hardhat.
+2. Set up a connection to the Ethereum network (e.g., via Infura or Alchemy).
+3. Deploy the contract to your desired network.
+
+```javascript
 const CertificationNFT = artifacts.require("CertificationNFT");
 
 module.exports = async function(deployer) {
   await deployer.deploy(CertificationNFT);
 };
-Future Enhancements
+```
 
-Certificate Revocation: Add functionality to allow institutions to revoke certificates if necessary.
-Additional Metadata: Include more fields for metadata such as grade, duration, etc.
-Multi-institution Support: Extend the contract to allow multiple institutions to issue certificates.
-Cross-chain Deployment: Support for certificates on multiple blockchains (e.g., Polygon, Binance Smart Chain).
-License
+## Future Enhancements
+
+- **Certificate Revocation:** Add functionality to allow institutions to revoke certificates if necessary.
+- **Additional Metadata:** Include more fields for metadata such as grade, duration, etc.
+- **Multi-institution Support:** Extend the contract to allow multiple institutions to issue certificates.
+- **Cross-chain Deployment:** Support for certificates on multiple blockchains (e.g., Polygon, Binance Smart Chain).
+
+## License
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
 
-Hackathon Team:
+## Hackathon Team
 
-Iqbal Fachry (Developer)
+**Iqbal Fachry (Developer)**
+
 Feel free to reach out to us if you have any questions or suggestions. Happy coding! 🚀
+```
+
