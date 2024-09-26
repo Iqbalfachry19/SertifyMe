@@ -1,6 +1,3 @@
-Here's your **CertificationNFT** project documentation in Markdown format:
-
-```markdown
 # CertificationNFT - Based Sea Hackathon Project
 
 ## Overview
@@ -64,7 +61,6 @@ The contract is designed to mint NFTs representing certificates, containing key 
        "Blockchain Development",
        "XYZ University"
    );
-   ```
 
 3. **Verify a Certificate:**  
    Anyone can call the `getCertificate` function by providing a valid tokenId. This returns the certificate metadata and verifies ownership.
@@ -110,4 +106,3 @@ This project is licensed under the MIT License. See the LICENSE file for more in
 
 Feel free to reach out to us if you have any questions or suggestions. Happy coding! 🚀
 ```
-
