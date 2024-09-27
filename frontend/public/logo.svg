@@ -12,7 +12,7 @@
         strokeWidth="8"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
+      ></path>
       <path
         d="M50 75L75 50L50 25L25 50L50 75Z"
         stroke="white"
@@ -20,5 +20,5 @@
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
-      />
+      /></path>
     </svg>
