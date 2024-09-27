@@ -122,7 +122,7 @@ export default function App() {
                   </span>
                 </h1>
                 <p className="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
-                  sertify leverages blockchain to create tamper-proof,
+                  SertifyMe leverages blockchain to create tamper-proof,
                   verifiable certificates for your accomplishments.
                 </p>
                 <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
@@ -150,7 +150,7 @@ export default function App() {
           <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-extrabold text-gray-900">
-                Why Choose sertify?
+                Why Choose SertifyMe?
               </h2>
               <p className="mt-4 text-lg text-gray-500">
                 Our platform offers unique advantages for both certificate
@@ -330,7 +330,7 @@ export default function App() {
             <div className="flex-shrink-0 flex items-center">
               <Logo />
               <span className="ml-2 text-xl font-bold text-gray-900">
-                sertify
+                SertifyMe
               </span>
             </div>
             <div className="hidden md:flex md:space-x-8">
@@ -446,7 +446,7 @@ export default function App() {
               ))}
             </div>
             <p className="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-              &copy; 2024 sertify, Inc. All rights reserved.
+              &copy; 2024 SertifyMe, Inc. All rights reserved.
             </p>
           </div>
         </div>
