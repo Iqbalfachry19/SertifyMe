@@ -61,10 +61,12 @@ export default function App() {
     init();
   }, []);
   const switchToNetwork = async (requiredChainId: string) => {
-      if (typeof window.ethereum === "undefined") {
-    alert("MetaMask is not installed. Please install MetaMask and try again.");
-    return false; // Exit the function if MetaMask is not available
-  }
+    if (typeof window.ethereum === "undefined") {
+      alert(
+        "MetaMask is not installed. Please install MetaMask and try again."
+      );
+      return false; // Exit the function if MetaMask is not available
+    }
     try {
       const currentChainId = await window.ethereum.request({
         method: "eth_chainId",
@@ -83,41 +85,41 @@ export default function App() {
 
       return true;
     } catch (error) {
-          const metamaskError = error as { code: number; message: string };
+      const metamaskError = error as { code: number; message: string };
 
-        if (metamaskError.code === 4902) {
-          // If the network has not been added to MetaMask
-          try {
-            // Add the network
-            await window.ethereum.request({
-              method: "wallet_addEthereumChain",
-              params: [
-                {
-                  chainId: requiredChainId,
-                  chainName: "Base Sepolia", // Add desired network details
-                  nativeCurrency: {
-                    name: "ETH", // Native currency (e.g., ETH for Ethereum)
-                    symbol: "ETH",
-                    decimals: 18,
-                  },
-                  rpcUrls: ["https://sepolia.base.org"], // RPC URL
-                  blockExplorerUrls: ["https://sepolia-explorer.base.org"], // Block explorer URL
+      if (metamaskError.code === 4902) {
+        // If the network has not been added to MetaMask
+        try {
+          // Add the network
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: requiredChainId,
+                chainName: "Base Sepolia", // Add desired network details
+                nativeCurrency: {
+                  name: "ETH", // Native currency (e.g., ETH for Ethereum)
+                  symbol: "ETH",
+                  decimals: 18,
                 },
-              ],
-            });
+                rpcUrls: ["https://sepolia.base.org"], // RPC URL
+                blockExplorerUrls: ["https://sepolia-explorer.base.org"], // Block explorer URL
+              },
+            ],
+          });
 
-            return true;
-          } catch (addError) {
-            console.error("Failed to add the network:", addError);
-            return false;
-          }
-        } else {
-          console.error("Failed to switch the network:", error);
+          return true;
+        } catch (addError) {
+          console.error("Failed to add the network:", addError);
           return false;
         }
+      } else {
+        console.error("Failed to switch the network:", error);
+        return false;
       }
     }
   };
+
   const mintCertificate = async (e: FormEvent) => {
     e.preventDefault();
     if (!contract) {
