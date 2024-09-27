@@ -60,7 +60,11 @@ export default function App() {
 
     init();
   }, []);
-  const switchToNetwork = async (requiredChainId) => {
+  const switchToNetwork = async (requiredChainId: string) => {
+      if (typeof window.ethereum === "undefined") {
+    alert("MetaMask is not installed. Please install MetaMask and try again.");
+    return false; // Exit the function if MetaMask is not available
+  }
     try {
       const currentChainId = await window.ethereum.request({
         method: "eth_chainId",
@@ -79,8 +83,9 @@ export default function App() {
 
       return true;
     } catch (error) {
-      if (error instanceof Error) {
-        if (error.code === 4902) {
+          const metamaskError = error as { code: number; message: string };
+
+        if (metamaskError.code === 4902) {
           // If the network has not been added to MetaMask
           try {
             // Add the network
@@ -89,14 +94,14 @@ export default function App() {
               params: [
                 {
                   chainId: requiredChainId,
-                  chainName: "BaseSepolia", // Add desired network details
+                  chainName: "Base Sepolia", // Add desired network details
                   nativeCurrency: {
                     name: "ETH", // Native currency (e.g., ETH for Ethereum)
                     symbol: "ETH",
                     decimals: 18,
                   },
-                  rpcUrls: ["https://mainnet.infura.io/v3/YOUR_INFURA_KEY"], // RPC URL
-                  blockExplorerUrls: ["https://etherscan.io"], // Block explorer URL
+                  rpcUrls: ["https://sepolia.base.org"], // RPC URL
+                  blockExplorerUrls: ["https://sepolia-explorer.base.org"], // Block explorer URL
                 },
               ],
             });
