@@ -39,6 +39,12 @@ export default function App() {
         alert("Please install MetaMask!");
         return;
       }
+      const chainId = "0x14a34"; // Example for Ethereum Mainnet (0x1). Change to desired network chain ID.
+      const correctNetwork = await switchToNetwork(chainId);
+
+      if (!correctNetwork) {
+        return; // Stop if network switching failed or was canceled by user.
+      }
       const res = await fetch("/CertificationNFT.json");
       const CertificationNFT = await res.json();
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -54,7 +60,59 @@ export default function App() {
 
     init();
   }, []);
+  const switchToNetwork = async (requiredChainId) => {
+    try {
+      const currentChainId = await window.ethereum.request({
+        method: "eth_chainId",
+      });
 
+      // If the user is already on the correct network
+      if (currentChainId === requiredChainId) {
+        return true;
+      }
+
+      // Prompt user to switch to the correct network
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: requiredChainId }],
+      });
+
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.code === 4902) {
+          // If the network has not been added to MetaMask
+          try {
+            // Add the network
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: requiredChainId,
+                  chainName: "BaseSepolia", // Add desired network details
+                  nativeCurrency: {
+                    name: "ETH", // Native currency (e.g., ETH for Ethereum)
+                    symbol: "ETH",
+                    decimals: 18,
+                  },
+                  rpcUrls: ["https://mainnet.infura.io/v3/YOUR_INFURA_KEY"], // RPC URL
+                  blockExplorerUrls: ["https://etherscan.io"], // Block explorer URL
+                },
+              ],
+            });
+
+            return true;
+          } catch (addError) {
+            console.error("Failed to add the network:", addError);
+            return false;
+          }
+        } else {
+          console.error("Failed to switch the network:", error);
+          return false;
+        }
+      }
+    }
+  };
   const mintCertificate = async (e: FormEvent) => {
     e.preventDefault();
     if (!contract) {
