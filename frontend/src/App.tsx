@@ -15,7 +15,7 @@ import { AiOutlineTwitter } from "react-icons/ai"; // For the X (Twitter) logo
 
 import Logo from "./Logo";
 import HeroImage from "./HeroImage";
-const CONTRACT_ADDRESS = "0xfd71381b49CA874D269eE45A84f25744a3F9433C";
+
 interface Certificate {
   recipientName: string;
   courseName: string;
@@ -23,6 +23,7 @@ interface Certificate {
   issueDate: number; // Assuming this is a timestamp
 }
 export default function App() {
+  const CONTRACT_ADDRESS = "0xfd71381b49CA874D269eE45A84f25744a3F9433C";
   const [recipientAddress, setRecipientAddress] = useState<string>("");
   const [recipientName, setRecipientName] = useState<string>("");
   const [courseName, setCourseName] = useState<string>("");
