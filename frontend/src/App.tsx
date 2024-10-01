@@ -20,6 +20,7 @@ import { useAccount, useDisconnect } from "wagmi";
 import { AlertPopup } from "./Alert";
 import { Alert, AlertDescription } from "./components/ui/alert";
 import Footer from "./Footer";
+import CertificateView from "./cetification-view";
 function ConnectWallet() {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -417,36 +418,13 @@ export default function App() {
           <TabsContent value="view">
             <Card>
               <CardHeader>
-                <CardTitle>Existing Certificates</CardTitle>
+                <CardTitle>Your Certificates</CardTitle>
               </CardHeader>
               <CardContent>
                 <Button onClick={fetchCertificates} className="mb-4">
                   Fetch Certificates
                 </Button>
-                <div className="space-y-4">
-                  {certificateData.map((cert, index) => (
-                    <Card key={index}>
-                      <CardContent className="pt-4">
-                        <p>
-                          <strong>Recipient Name:</strong> {cert?.recipientName}
-                        </p>
-                        <p>
-                          <strong>Course Name:</strong> {cert?.courseName}
-                        </p>
-                        <p>
-                          <strong>Institution Name:</strong>{" "}
-                          {cert?.institutionName}
-                        </p>
-                        <p>
-                          <strong>Issue Date:</strong>{" "}
-                          {new Date(
-                            Number(cert?.issueDate) * 1000
-                          ).toLocaleDateString()}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+                <CertificateView certificates={certificateData} />
               </CardContent>
             </Card>
           </TabsContent>
