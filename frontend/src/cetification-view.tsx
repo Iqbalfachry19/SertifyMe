@@ -25,7 +25,11 @@ export default function CertificateView({
   }, [certificates]);
 
   const formatDate = (timestamp: number) => {
-    return new Date(Number(timestamp) * 1000).toLocaleDateString();
+    return new Date(Number(timestamp) * 1000).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
 
   if (!certificates || certificates.length === 0) {
