@@ -335,8 +335,12 @@ export default function App() {
           className="space-y-4"
         >
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="mint">Mint Certificate</TabsTrigger>
-            <TabsTrigger value="view">View Certificates</TabsTrigger>
+            <TabsTrigger onClick={() => setCurrentView("mint")} value="mint">
+              Mint Certificate
+            </TabsTrigger>
+            <TabsTrigger onClick={() => setCurrentView("view")} value="view">
+              View Certificates
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="mint">
             <Card>
