@@ -548,6 +548,7 @@ export default function App() {
                 onClick={() => {
                   setCurrentView("mint");
                   setActiveTab("mint");
+                  setIsMenuOpen(false);
                 }}
                 className={`${
                   currentView === "mint"
@@ -561,6 +562,7 @@ export default function App() {
                 onClick={() => {
                   setCurrentView("view");
                   setActiveTab("view");
+                  setIsMenuOpen(false);
                 }}
                 className={`${
                   currentView === "view"
