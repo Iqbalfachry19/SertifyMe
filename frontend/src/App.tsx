@@ -5,6 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Menu, X, Award, Shield, Zap } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Wallet, LogOut } from "lucide-react";
 import {
   FaFacebookF,
   FaInstagram,
@@ -12,10 +20,49 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa";
 import { AiOutlineTwitter } from "react-icons/ai"; // For the X (Twitter) logo
-
+import { WalletOptions } from "./wallet-options";
 import Logo from "./Logo";
 import HeroImage from "./HeroImage";
+import { useAccount, useDisconnect } from "wagmi";
+function ConnectWallet() {
+  const { address, isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
 
+  if (isConnected) {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="outline"
+            className="w-36 justify-start text-left font-normal text-black border-gray-600"
+          >
+            <Wallet className="mr-2 h-4 w-4" />
+            {address?.slice(0, 6)}...{address?.slice(-4)}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={() => disconnect()}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Disconnect
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  }
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline" className="text-black border-gray-600">
+          Connect Wallet
+        </Button>
+      </SheetTrigger>
+      <SheetContent>
+        <WalletOptions />
+      </SheetContent>
+    </Sheet>
+  );
+}
 interface Certificate {
   recipientName: string;
   courseName: string;
@@ -420,6 +467,7 @@ export default function App() {
               >
                 Mint Certificate
               </Button>
+              <ConnectWallet />
             </div>
             <div className="flex md:hidden">
               <Button
@@ -468,6 +516,7 @@ export default function App() {
               >
                 Mint Certificate
               </Button>
+              <ConnectWallet />
             </div>
           </div>
         )}
