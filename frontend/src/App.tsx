@@ -83,6 +83,7 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [currentView, setCurrentView] = useState<string>("home");
   const [showAlert, setShowAlert] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>("mint");
   useEffect(() => {
     const init = async () => {
       if (!window.ethereum) {
@@ -187,6 +188,7 @@ export default function App() {
       await tx.wait();
       setShowAlert(true);
       fetchCertificates();
+      setActiveTab("view");
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
@@ -244,13 +246,19 @@ export default function App() {
                 <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
                   <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
                     <Button
-                      onClick={() => setCurrentView("mint")}
+                      onClick={() => {
+                        setCurrentView("mint");
+                        setActiveTab("mint");
+                      }}
                       className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8"
                     >
                       Get started
                     </Button>
                     <Button
-                      onClick={() => setCurrentView("view")}
+                      onClick={() => {
+                        setCurrentView("view");
+                        setActiveTab("view");
+                      }}
                       className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8"
                     >
                       View Certificates
@@ -321,7 +329,11 @@ export default function App() {
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
           Certification NFT
         </h1>
-        <Tabs defaultValue="mint" className="space-y-4">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-4"
+        >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="mint">Mint Certificate</TabsTrigger>
             <TabsTrigger value="view">View Certificates</TabsTrigger>
@@ -473,7 +485,10 @@ export default function App() {
                 Home
               </Button>
               <Button
-                onClick={() => setCurrentView("mint")}
+                onClick={() => {
+                  setCurrentView("mint");
+                  setActiveTab("mint");
+                }}
                 className={`${
                   currentView === "mint"
                     ? "text-indigo-600 border-indigo-500"
@@ -481,6 +496,19 @@ export default function App() {
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Mint Certificate
+              </Button>
+              <Button
+                onClick={() => {
+                  setCurrentView("view");
+                  setActiveTab("view");
+                }}
+                className={`${
+                  currentView === "view"
+                    ? "text-indigo-600 border-indigo-500"
+                    : "text-white hover:text-indigo-600 hover:border-gray-300"
+                } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+              >
+                View Certificates
               </Button>
               <ConnectWallet />
             </div>
@@ -521,7 +549,7 @@ export default function App() {
               <Button
                 onClick={() => {
                   setCurrentView("mint");
-                  setIsMenuOpen(false);
+                  setActiveTab("mint");
                 }}
                 className={`${
                   currentView === "mint"
@@ -530,6 +558,19 @@ export default function App() {
                 } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
               >
                 Mint Certificate
+              </Button>
+              <Button
+                onClick={() => {
+                  setCurrentView("view");
+                  setActiveTab("view");
+                }}
+                className={`${
+                  currentView === "view"
+                    ? "bg-indigo-50 border-indigo-500 text-indigo-700"
+                    : "border-transparent text-white hover:bg-white hover:border-gray-300 hover:text-gray-700"
+                } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
+              >
+                View Certificates
               </Button>
               <ConnectWallet />
             </div>
