@@ -405,7 +405,7 @@ export default function App() {
                 className={`${
                   currentView === "home"
                     ? "text-indigo-600 border-indigo-500"
-                    : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    : "text-white hover:text-gray-700 hover:border-gray-300"
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Home
@@ -415,7 +415,7 @@ export default function App() {
                 className={`${
                   currentView === "mint"
                     ? "text-indigo-600 border-indigo-500"
-                    : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    : "text-white hover:text-indigo-600 hover:border-gray-300"
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
                 Mint Certificate
@@ -463,7 +463,7 @@ export default function App() {
                 className={`${
                   currentView === "mint"
                     ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
+                    : "border-transparent text-white hover:bg-white hover:border-gray-300 hover:text-gray-700"
                 } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
               >
                 Mint Certificate
