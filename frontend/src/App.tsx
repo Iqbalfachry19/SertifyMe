@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Menu, X, Award, Shield, Zap } from "lucide-react";
+import { Menu, X, Award, Shield, Zap, AlertCircle } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   DropdownMenu,
@@ -24,6 +24,8 @@ import { WalletOptions } from "./wallet-options";
 import Logo from "./Logo";
 import HeroImage from "./HeroImage";
 import { useAccount, useDisconnect } from "wagmi";
+import { AlertPopup } from "./Alert";
+import { Alert, AlertDescription } from "./components/ui/alert";
 function ConnectWallet() {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -80,6 +82,7 @@ export default function App() {
   const [contract, setContract] = useState<Contract | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [currentView, setCurrentView] = useState<string>("home");
+  const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
     const init = async () => {
       if (!window.ethereum) {
@@ -182,7 +185,7 @@ export default function App() {
         institutionName
       );
       await tx.wait();
-      alert("Certificate minted successfully!");
+      setShowAlert(true);
       fetchCertificates();
     } catch (err) {
       if (err instanceof Error) {
@@ -390,7 +393,14 @@ export default function App() {
                     Mint Certificate
                   </Button>
                 </form>
-                {error && <p className="mt-4 text-red-600">{error}</p>}
+                {error && (
+                  <Alert variant="destructive" className="mt-4">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription className="ml-2 break-words">
+                      {error}
+                    </AlertDescription>
+                  </Alert>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -430,6 +440,11 @@ export default function App() {
               </CardContent>
             </Card>
           </TabsContent>
+          <AlertPopup
+            message="Certificate minted successfully!"
+            isVisible={showAlert}
+            onClose={() => setShowAlert(false)}
+          />
         </Tabs>
       </div>
     </div>
