@@ -90,12 +90,7 @@ export default function App() {
         alert("Please install MetaMask!");
         return;
       }
-      const chainId = "0x14a34"; // Example for Ethereum Mainnet (0x1). Change to desired network chain ID.
-      const correctNetwork = await switchToNetwork(chainId);
 
-      if (!correctNetwork) {
-        return; // Stop if network switching failed or was canceled by user.
-      }
       const res = await fetch("/CertificationNFT.json");
       const CertificationNFT = await res.json();
       const provider = new ethers.BrowserProvider(window.ethereum);
@@ -107,6 +102,12 @@ export default function App() {
       );
 
       setContract(contractInstance);
+      const chainId = "0x14a34"; // Example for Ethereum Mainnet (0x1). Change to desired network chain ID.
+      const correctNetwork = await switchToNetwork(chainId);
+
+      if (!correctNetwork) {
+        return; // Stop if network switching failed or was canceled by user.
+      }
     };
 
     init();
