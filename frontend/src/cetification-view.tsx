@@ -43,7 +43,7 @@ export default function CertificateView({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="grid pt-4 grid-cols-1 md:grid-cols-2 gap-8">
       <div className="space-y-4">
         <h2 className="text-2xl font-bold text-gray-900">Your Certificates</h2>
         <div className="space-y-2">

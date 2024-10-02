@@ -106,6 +106,11 @@ export default function App() {
 
     init();
   }, []);
+  useEffect(() => {
+    if (contract) {
+      fetchCertificates();
+    }
+  }, [contract]);
   const switchToNetwork = async (requiredChainId: string) => {
     if (typeof window.ethereum === "undefined") {
       alert(
@@ -417,13 +422,7 @@ export default function App() {
           </TabsContent>
           <TabsContent value="view">
             <Card>
-              <CardHeader>
-                <CardTitle>Your Certificates</CardTitle>
-              </CardHeader>
               <CardContent>
-                <Button onClick={fetchCertificates} className="mb-4">
-                  Fetch Certificates
-                </Button>
                 <CertificateView certificates={certificateData} />
               </CardContent>
             </Card>
