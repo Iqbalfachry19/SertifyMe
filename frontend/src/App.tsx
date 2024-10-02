@@ -4,7 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Menu, X, Award, Shield, Zap, AlertCircle } from "lucide-react";
+import {
+  Menu,
+  X,
+  Award,
+  Shield,
+  Zap,
+  AlertCircle,
+  Sparkles,
+} from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   DropdownMenu,
@@ -21,6 +29,10 @@ import { AlertPopup } from "./Alert";
 import { Alert, AlertDescription } from "./components/ui/alert";
 import Footer from "./Footer";
 import CertificateView from "./cetification-view";
+interface AISuggestions {
+  courseName: string;
+  institutionName: string;
+}
 function ConnectWallet() {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
@@ -79,6 +91,10 @@ export default function App() {
   const [currentView, setCurrentView] = useState<string>("home");
   const [showAlert, setShowAlert] = useState(false);
   const [activeTab, setActiveTab] = useState<string>("mint");
+  const [aiSuggestions, setAiSuggestions] = useState<AISuggestions | null>(
+    null
+  );
+  const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   useEffect(() => {
     const init = async () => {
       if (!window.ethereum) {
@@ -218,7 +234,49 @@ export default function App() {
       }
     }
   };
+  const fetchAISuggestions = () => {
+    setIsLoadingAI(true);
+    setError("");
+    try {
+      setTimeout(() => {
+        const suggestions = generateAISuggestions(recipientName);
+        setAiSuggestions(suggestions);
+        setIsLoadingAI(false);
+      }, 1000); // Simulate API delay
+    } catch (err) {
+      if (err instanceof Error) {
+        setError("Failed to generate AI suggestions: " + err.message);
+      }
+      setIsLoadingAI(false);
+    }
+  };
+  const generateAISuggestions = (name: string): AISuggestions => {
+    const courses = [
+      "Blockchain Fundamentals",
+      "Smart Contract Development",
+      "Decentralized Finance",
+      "Cryptocurrency Economics",
+      "Web3 Application Development",
+    ];
+    const institutions = [
+      "Ethereum Academy",
+      "Blockchain University",
+      "Crypto Institute",
+      "DeFi School",
+      "Web3 College",
+    ];
 
+    const nameHash = name
+      .split("")
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const courseIndex = nameHash % courses.length;
+    const institutionIndex = (nameHash * 31) % institutions.length;
+
+    return {
+      courseName: courses[courseIndex],
+      institutionName: institutions[institutionIndex],
+    };
+  };
   const renderHomePage = () => (
     <div className="min-h-screen bg-gray-50">
       <main>
@@ -377,6 +435,47 @@ export default function App() {
                       required
                     />
                   </div>
+                  <Button
+                    type="button"
+                    onClick={fetchAISuggestions}
+                    disabled={isLoadingAI || !recipientName}
+                    className="w-full"
+                  >
+                    {isLoadingAI ? (
+                      "Generating..."
+                    ) : (
+                      <>
+                        <Sparkles className="mr-2 h-4 w-4" />
+                        Generate AI Suggestions
+                      </>
+                    )}
+                  </Button>
+                  {aiSuggestions && (
+                    <div className="space-y-2 p-4 bg-blue-50 rounded-md">
+                      <p className="text-sm font-medium text-blue-800">
+                        AI Suggestions:
+                      </p>
+                      <p className="text-sm text-blue-700">
+                        Course: {aiSuggestions.courseName}
+                      </p>
+                      <p className="text-sm text-blue-700">
+                        Institution: {aiSuggestions.institutionName}
+                      </p>
+                      <div className="flex space-x-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setCourseName(aiSuggestions.courseName);
+                            setInstitutionName(aiSuggestions.institutionName);
+                          }}
+                        >
+                          Use Suggestions
+                        </Button>
+                      </div>
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <label
                       htmlFor="courseName"
