@@ -257,6 +257,11 @@ export default function App() {
       "Decentralized Finance",
       "Cryptocurrency Economics",
       "Web3 Application Development",
+      "Blockchain Security",
+      "NFT Creation and Management",
+      "Tokenomics",
+      "Blockchain Scalability Solutions",
+      "Crypto Trading Strategies",
     ];
     const institutions = [
       "Ethereum Academy",
@@ -264,8 +269,12 @@ export default function App() {
       "Crypto Institute",
       "DeFi School",
       "Web3 College",
+      "Blockchain Tech Institute",
+      "Decentralized Learning Center",
+      "Crypto Innovation Hub",
+      "Blockchain Research Academy",
+      "Digital Asset University",
     ];
-
     const nameHash = name
       .split("")
       .reduce((acc, char) => acc + char.charCodeAt(0), 0);
