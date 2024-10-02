@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Award, Download } from "lucide-react";
+import { jsPDF } from "jspdf";
 
 interface Certificate {
   recipientName: string;
@@ -30,6 +31,81 @@ export default function CertificateView({
       month: "long",
       day: "numeric",
     });
+  };
+
+  const downloadCertificate = () => {
+    if (!selectedCertificate) return;
+
+    const doc = new jsPDF();
+
+    // Set background color
+    doc.setFillColor(240, 248, 255); // Light blue background
+    doc.rect(
+      0,
+      0,
+      doc.internal.pageSize.width,
+      doc.internal.pageSize.height,
+      "F"
+    );
+
+    // Add border
+    doc.setDrawColor(0, 0, 255);
+    doc.setLineWidth(5);
+    doc.rect(
+      10,
+      10,
+      doc.internal.pageSize.width - 20,
+      doc.internal.pageSize.height - 20
+    );
+
+    // Add title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(24);
+    doc.setTextColor(0, 0, 128); // Navy blue
+    doc.text("Certificate of Completion", 105, 40, { align: "center" });
+
+    // Add content
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0); // Black
+    doc.text("This certifies that", 105, 60, { align: "center" });
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text(selectedCertificate.recipientName, 105, 75, { align: "center" });
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(16);
+    doc.text("has successfully completed the course", 105, 90, {
+      align: "center",
+    });
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text(selectedCertificate.courseName, 105, 105, { align: "center" });
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(16);
+    doc.text("offered by", 105, 120, { align: "center" });
+
+    doc.setFont("helvetica", "bold");
+    doc.text(selectedCertificate.institutionName, 105, 135, {
+      align: "center",
+    });
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(14);
+    doc.text(
+      `Issued on: ${formatDate(selectedCertificate.issueDate)}`,
+      105,
+      155,
+      { align: "center" }
+    );
+
+    // Save the PDF
+    doc.save(
+      `${selectedCertificate.recipientName}_${selectedCertificate.courseName}_Certificate.pdf`
+    );
   };
 
   if (!certificates || certificates.length === 0) {
@@ -88,7 +164,10 @@ export default function CertificateView({
                 Issued on: {formatDate(selectedCertificate.issueDate)}
               </p>
               <div className="pt-4">
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button
+                  className="bg-blue-600 hover:bg-blue-700"
+                  onClick={downloadCertificate}
+                >
                   <Download className="mr-2 h-4 w-4" />
                   Download Certificate
                 </Button>
