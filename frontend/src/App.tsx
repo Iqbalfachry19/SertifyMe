@@ -299,9 +299,9 @@ export default function App() {
 
     // Predict using the model
     const predictions = model.predict(inputTensor) as tf.Tensor[]; // Cast to an array of tensors
-    console.log(predictions);
-    console.log(predictions[0].argMax(1).dataSync()[0]);
-    console.log(predictions[1].argMax(1).dataSync()[0]);
+    // console.log(predictions);
+    // console.log(predictions[0].argMax(1).dataSync()[0]);
+    // console.log(predictions[1].argMax(1).dataSync()[0]);
     // Get the predicted indices for courses and institutions
     const predictedCourseIndex = predictions[0].argMax(1).dataSync()[0]; // First output for courses
     const predictedInstitutionIndex = predictions[1].argMax(1).dataSync()[0]; // Second output for institutions
