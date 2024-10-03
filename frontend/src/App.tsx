@@ -31,7 +31,7 @@ import { Alert, AlertDescription } from "./components/ui/alert";
 import Footer from "./Footer";
 import CertificateView from "./cetification-view";
 import { useTranslation } from "react-i18next";
-
+import * as tf from "@tensorflow/tfjs";
 interface AISuggestions {
   courseName: string;
   institutionName: string;
@@ -309,12 +309,20 @@ export default function App() {
       "Blockchain Research Academy",
       "Digital Asset University",
     ];
-    const nameHash = name
-      .split("")
-      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    // Convert the name string to a tensor
+    const nameTensor = tf.tensor1d(name.split("").map((c) => c.charCodeAt(0)));
+
+    // Reduce the tensor by summing the values to get a single number (hash)
+    const nameHash = nameTensor.sum().dataSync()[0];
+
+    // Compute the course and institution index using modulus
     const courseIndex = nameHash % courses.length;
     const institutionIndex = (nameHash * 31) % institutions.length;
 
+    // Clean up tensor to avoid memory leaks
+    nameTensor.dispose();
+
+    // Return the recommended course and institution
     return {
       courseName: courses[courseIndex],
       institutionName: institutions[institutionIndex],
