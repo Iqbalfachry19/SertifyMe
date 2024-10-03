@@ -12,6 +12,7 @@ import {
   Zap,
   AlertCircle,
   Sparkles,
+  Globe,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -29,6 +30,8 @@ import { AlertPopup } from "./Alert";
 import { Alert, AlertDescription } from "./components/ui/alert";
 import Footer from "./Footer";
 import CertificateView from "./cetification-view";
+import { useTranslation } from "react-i18next";
+
 interface AISuggestions {
   courseName: string;
   institutionName: string;
@@ -36,7 +39,7 @@ interface AISuggestions {
 function ConnectWallet() {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
-
+  const { t } = useTranslation();
   if (isConnected) {
     return (
       <DropdownMenu>
@@ -52,7 +55,7 @@ function ConnectWallet() {
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={() => disconnect()}>
             <LogOut className="mr-2 h-4 w-4" />
-            Disconnect
+            {t("disconnect")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -63,7 +66,7 @@ function ConnectWallet() {
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="outline" className="text-black border-gray-600">
-          Connect Wallet
+          {t("connectWallet")}
         </Button>
       </SheetTrigger>
       <SheetContent>
@@ -95,6 +98,11 @@ export default function App() {
     null
   );
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
   useEffect(() => {
     const init = async () => {
       if (!window.ethereum) {
@@ -186,7 +194,33 @@ export default function App() {
       }
     }
   };
-
+  const renderLanguageSelector = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" className="w-36">
+          <Globe className="mr-2 h-4 w-4" />
+          {t("language")}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem onClick={() => changeLanguage("en")}>
+          English
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage("id")}>
+          Bahasa Indonesia
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage("ms")}>
+          Bahasa Melayu
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage("th")}>
+          ภาษาไทย
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage("vi")}>
+          Tiếng Việt
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
   const mintCertificate = async (e: FormEvent) => {
     e.preventDefault();
     if (!contract) {
@@ -299,16 +333,13 @@ export default function App() {
               </div>
               <div className="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
                 <h1 className="text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
-                  <span className="block text-white">
-                    Secure Your Achievements
-                  </span>
+                  <span className="block text-white">{t("heroTitle1")}</span>
                   <span className="block text-indigo-200">
-                    with Blockchain Technology
+                    {t("heroTitle2")}
                   </span>
                 </h1>
                 <p className="mt-6 max-w-lg mx-auto text-center text-xl text-indigo-200 sm:max-w-3xl">
-                  SertifyMe leverages blockchain to create tamper-proof,
-                  verifiable certificates for your accomplishments.
+                  {t("heroDescription")}
                 </p>
                 <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
                   <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5">
@@ -319,7 +350,7 @@ export default function App() {
                       }}
                       className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8"
                     >
-                      Get started
+                      {t("getStarted")}
                     </Button>
                     <Button
                       onClick={() => {
@@ -328,7 +359,7 @@ export default function App() {
                       }}
                       className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8"
                     >
-                      View Certificates
+                      {t("viewCertificates")}
                     </Button>
                   </div>
                 </div>
@@ -341,31 +372,27 @@ export default function App() {
           <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-extrabold text-gray-900">
-                Why Choose SertifyMe?
+                {t("whyChooseUs")}
               </h2>
               <p className="mt-4 text-lg text-gray-500">
-                Our platform offers unique advantages for both certificate
-                issuers and recipients.
+                {t("platformAdvantages")}
               </p>
             </div>
             <dl className="mt-12 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12 lg:gap-x-8">
               {[
                 {
-                  name: "Blockchain Security",
-                  description:
-                    "Certificates are stored on the blockchain, ensuring they cannot be tampered with or forged.",
+                  name: t("blockchainSecurity"),
+                  description: t("blockchainSecurityDesc"),
                   icon: Shield,
                 },
                 {
-                  name: "Instant Verification",
-                  description:
-                    "Employers and institutions can instantly verify the authenticity of certificates.",
+                  name: t("instantVerification"),
+                  description: t("instantVerificationDesc"),
                   icon: Zap,
                 },
                 {
-                  name: "Lifelong Access",
-                  description:
-                    "Recipients have permanent access to their certificates, independent of the issuing institution.",
+                  name: t("lifelongAccess"),
+                  description: t("lifelongAccessDesc"),
                   icon: Award,
                 },
               ].map((feature) => (
@@ -389,12 +416,11 @@ export default function App() {
       </main>
     </div>
   );
-
   const renderCertificateManagement = () => (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">
-          Certification NFT
+          {t("certificationNFT")}
         </h1>
         <Tabs
           value={activeTab}
@@ -403,16 +429,16 @@ export default function App() {
         >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger onClick={() => setCurrentView("mint")} value="mint">
-              Mint Certificate
+              {t("mintCertificate")}
             </TabsTrigger>
             <TabsTrigger onClick={() => setCurrentView("view")} value="view">
-              View Certificates
+              {t("viewCertificates")}
             </TabsTrigger>
           </TabsList>
           <TabsContent value="mint">
             <Card>
               <CardHeader>
-                <CardTitle>Mint New Certificate</CardTitle>
+                <CardTitle>{t("mintNewCertificate")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={mintCertificate} className="space-y-4">
@@ -421,7 +447,7 @@ export default function App() {
                       htmlFor="recipientAddress"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Recipient Address
+                      {t("recipientAddress")}
                     </label>
                     <Input
                       id="recipientAddress"
@@ -435,7 +461,7 @@ export default function App() {
                       htmlFor="recipientName"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Recipient Name
+                      {t("recipientName")}
                     </label>
                     <Input
                       id="recipientName"
@@ -451,24 +477,24 @@ export default function App() {
                     className="w-full"
                   >
                     {isLoadingAI ? (
-                      "Generating..."
+                      t("generating")
                     ) : (
                       <>
                         <Sparkles className="mr-2 h-4 w-4" />
-                        Generate AI Suggestions
+                        {t("generateAISuggestions")}
                       </>
                     )}
                   </Button>
                   {aiSuggestions && (
                     <div className="space-y-2 p-4 bg-blue-50 rounded-md">
                       <p className="text-sm font-medium text-blue-800">
-                        AI Suggestions:
+                        {t("aiSuggestions")}:
                       </p>
                       <p className="text-sm text-blue-700">
-                        Course: {aiSuggestions.courseName}
+                        {t("course")}: {aiSuggestions.courseName}
                       </p>
                       <p className="text-sm text-blue-700">
-                        Institution: {aiSuggestions.institutionName}
+                        {t("institution")}: {aiSuggestions.institutionName}
                       </p>
                       <div className="flex space-x-2">
                         <Button
@@ -480,7 +506,7 @@ export default function App() {
                             setInstitutionName(aiSuggestions.institutionName);
                           }}
                         >
-                          Use Suggestions
+                          {t("useSuggestions")}
                         </Button>
                       </div>
                     </div>
@@ -490,7 +516,7 @@ export default function App() {
                       htmlFor="courseName"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Course Name
+                      {t("courseName")}
                     </label>
                     <Input
                       id="courseName"
@@ -504,7 +530,7 @@ export default function App() {
                       htmlFor="institutionName"
                       className="text-sm font-medium text-gray-700"
                     >
-                      Institution Name
+                      {t("institutionName")}
                     </label>
                     <Input
                       id="institutionName"
@@ -514,7 +540,7 @@ export default function App() {
                     />
                   </div>
                   <Button type="submit" className="w-full">
-                    Mint Certificate
+                    {t("mintCertificate")}
                   </Button>
                 </form>
                 {error && (
@@ -536,7 +562,7 @@ export default function App() {
             </Card>
           </TabsContent>
           <AlertPopup
-            message="Certificate minted successfully!"
+            message={t("certificateMinted")}
             isVisible={showAlert}
             onClose={() => setShowAlert(false)}
           />
@@ -562,10 +588,10 @@ export default function App() {
                 className={`${
                   currentView === "home"
                     ? "text-indigo-600 border-indigo-500"
-                    : "text-white hover:text-gray-700 hover:border-gray-300"
+                    : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
-                Home
+                {t("home")}
               </Button>
               <Button
                 onClick={() => {
@@ -575,10 +601,10 @@ export default function App() {
                 className={`${
                   currentView === "mint"
                     ? "text-indigo-600 border-indigo-500"
-                    : "text-white hover:text-indigo-600 hover:border-gray-300"
+                    : "text-gray-500 hover:text-indigo-600 hover:border-gray-300"
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
-                Mint Certificate
+                {t("mintCertificate")}
               </Button>
               <Button
                 onClick={() => {
@@ -588,11 +614,12 @@ export default function App() {
                 className={`${
                   currentView === "view"
                     ? "text-indigo-600 border-indigo-500"
-                    : "text-white hover:text-indigo-600 hover:border-gray-300"
+                    : "text-gray-500 hover:text-indigo-600 hover:border-gray-300"
                 } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
               >
-                View Certificates
+                {t("viewCertificates")}
               </Button>
+              {renderLanguageSelector()}
               <ConnectWallet />
             </div>
             <div className="flex md:hidden">
@@ -602,7 +629,7 @@ export default function App() {
                 className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
                 aria-expanded="false"
               >
-                <span className="sr-only">Open main menu</span>
+                <span className="sr-only">{t("openMainMenu")}</span>
                 {isMenuOpen ? (
                   <X className="block h-6 w-6" aria-hidden="true" />
                 ) : (
@@ -624,10 +651,10 @@ export default function App() {
                 className={`${
                   currentView === "home"
                     ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
+                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
                 } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
               >
-                Home
+                {t("home")}
               </Button>
               <Button
                 onClick={() => {
@@ -638,10 +665,10 @@ export default function App() {
                 className={`${
                   currentView === "mint"
                     ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-white hover:bg-white hover:border-gray-300 hover:text-gray-700"
+                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
                 } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
               >
-                Mint Certificate
+                {t("mintCertificate")}
               </Button>
               <Button
                 onClick={() => {
@@ -652,11 +679,12 @@ export default function App() {
                 className={`${
                   currentView === "view"
                     ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-white hover:bg-white hover:border-gray-300 hover:text-gray-700"
+                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
                 } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
               >
-                View Certificates
+                {t("viewCertificates")}
               </Button>
+              {renderLanguageSelector()}
               <ConnectWallet />
             </div>
           </div>

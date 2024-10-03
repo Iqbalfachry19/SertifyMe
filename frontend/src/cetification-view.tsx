@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Award, Download } from "lucide-react";
@@ -18,6 +19,7 @@ export default function CertificateView({
 }) {
   const [selectedCertificate, setSelectedCertificate] =
     useState<Certificate | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (certificates && certificates.length > 0) {
@@ -26,11 +28,14 @@ export default function CertificateView({
   }, [certificates]);
 
   const formatDate = (timestamp: number) => {
-    return new Date(Number(timestamp) * 1000).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    return new Date(Number(timestamp) * 1000).toLocaleDateString(
+      t("languageCode"),
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    );
   };
 
   const downloadCertificate = () => {
@@ -62,13 +67,13 @@ export default function CertificateView({
     doc.setFont("helvetica", "bold");
     doc.setFontSize(24);
     doc.setTextColor(0, 0, 128); // Navy blue
-    doc.text("Certificate of Completion", 105, 40, { align: "center" });
+    doc.text(t("certificateOfCompletion"), 105, 40, { align: "center" });
 
     // Add content
     doc.setFont("helvetica", "normal");
     doc.setFontSize(16);
     doc.setTextColor(0, 0, 0); // Black
-    doc.text("This certifies that", 105, 60, { align: "center" });
+    doc.text(t("thisCertifiesThat"), 105, 60, { align: "center" });
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
@@ -76,9 +81,7 @@ export default function CertificateView({
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(16);
-    doc.text("has successfully completed the course", 105, 90, {
-      align: "center",
-    });
+    doc.text(t("hasSuccessfullyCompleted"), 105, 90, { align: "center" });
 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(20);
@@ -86,7 +89,7 @@ export default function CertificateView({
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(16);
-    doc.text("offered by", 105, 120, { align: "center" });
+    doc.text(t("offeredBy"), 105, 120, { align: "center" });
 
     doc.setFont("helvetica", "bold");
     doc.text(selectedCertificate.institutionName, 105, 135, {
@@ -96,7 +99,7 @@ export default function CertificateView({
     doc.setFont("helvetica", "normal");
     doc.setFontSize(14);
     doc.text(
-      `Issued on: ${formatDate(selectedCertificate.issueDate)}`,
+      `${t("issuedOn")} ${formatDate(selectedCertificate.issueDate)}`,
       105,
       155,
       { align: "center" }
@@ -111,9 +114,7 @@ export default function CertificateView({
   if (!certificates || certificates.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-gray-600">
-          No certificates found. Mint a certificate to get started.
-        </p>
+        <p className="text-gray-600">{t("noCertificates")}</p>
       </div>
     );
   }
@@ -121,7 +122,9 @@ export default function CertificateView({
   return (
     <div className="grid pt-4 grid-cols-1 md:grid-cols-2 gap-8">
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-gray-900">Your Certificates</h2>
+        <h2 className="text-2xl font-bold text-gray-900">
+          {t("yourCertificates")}
+        </h2>
         <div className="space-y-2">
           {certificates.map((cert, index) => (
             <Button
@@ -144,24 +147,24 @@ export default function CertificateView({
                 <Award className="h-16 w-16 text-blue-600" />
               </div>
               <h3 className="text-2xl font-bold text-blue-800">
-                Certificate of Completion
+                {t("certificateOfCompletion")}
               </h3>
-              <p className="text-lg text-gray-700">This certifies that</p>
+              <p className="text-lg text-gray-700">{t("thisCertifiesThat")}</p>
               <p className="text-3xl font-serif text-blue-900">
                 {selectedCertificate.recipientName}
               </p>
               <p className="text-lg text-gray-700">
-                has successfully completed the course
+                {t("hasSuccessfullyCompleted")}
               </p>
               <p className="text-2xl font-bold text-blue-800">
                 {selectedCertificate.courseName}
               </p>
-              <p className="text-lg text-gray-700">offered by</p>
+              <p className="text-lg text-gray-700">{t("offeredBy")}</p>
               <p className="text-xl font-semibold text-blue-700">
                 {selectedCertificate.institutionName}
               </p>
               <p className="text-md text-gray-600">
-                Issued on: {formatDate(selectedCertificate.issueDate)}
+                {t("issuedOn")} {formatDate(selectedCertificate.issueDate)}
               </p>
               <div className="pt-4">
                 <Button
@@ -169,7 +172,7 @@ export default function CertificateView({
                   onClick={downloadCertificate}
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  Download Certificate
+                  {t("downloadCertificate")}
                 </Button>
               </div>
             </div>
