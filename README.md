@@ -2,7 +2,7 @@
 
 ## Overview
 
-**SertifyMe** is an Base-Based decentralized application (DApp) that allows institutions to issue verifiable digital certifications as NFTs (Non-Fungible Tokens) on the blockchain. This innovative approach enables recipients to securely and transparently prove their achievements, while institutions can efficiently manage the issuance and verification of these credentials.
+**SertifyMe** is a Base-Based decentralized application (DApp) that allows institutions to issue verifiable digital certifications as NFTs (Non-Fungible Tokens) on the blockchain. This innovative approach enables recipients to securely and transparently prove their achievements, while institutions can efficiently manage the issuance and verification of these credentials.
 
 The project leverages Solidity smart contracts and the ERC721 standard to create unique, tokenized credentials that include detailed information about the recipient, course, and institution.
 
