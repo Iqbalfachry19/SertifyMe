@@ -272,8 +272,8 @@ export default function App() {
     setIsLoadingAI(true);
     setError("");
     try {
-      setTimeout(() => {
-        const suggestions = generateAISuggestions(recipientName);
+      setTimeout(async () => {
+        const suggestions = await generateAISuggestions(recipientName);
         setAiSuggestions(suggestions);
         setIsLoadingAI(false);
       }, 1000); // Simulate API delay
@@ -284,48 +284,83 @@ export default function App() {
       setIsLoadingAI(false);
     }
   };
-  const generateAISuggestions = (name: string): AISuggestions => {
+  function nameHash(name: string) {
+    return name.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  }
+  const generateAISuggestions = async (
+    name: string
+  ): Promise<AISuggestions> => {
+    // Load the saved model from the filesystem
+    const model = await tf.loadLayersModel("/ai-suggestions-model/model.json");
+
+    // Hash the name and create the input tensor
+    const nameHashValue = nameHash(name) % 1000;
+    const inputTensor = tf.tensor2d([[nameHashValue]]);
+
+    // Predict using the model
+    const predictions = model.predict(inputTensor) as tf.Tensor[]; // Cast to an array of tensors
+    console.log(predictions);
+    console.log(predictions[0].argMax(1).dataSync()[0]);
+    console.log(predictions[1].argMax(1).dataSync()[0]);
+    // Get the predicted indices for courses and institutions
+    const predictedCourseIndex = predictions[0].argMax(1).dataSync()[0]; // First output for courses
+    const predictedInstitutionIndex = predictions[1].argMax(1).dataSync()[0]; // Second output for institutions
+
+    // Clean up
+    inputTensor.dispose();
+
+    // Course and institution lists
     const courses = [
-      "Blockchain Fundamentals",
       "Smart Contract Development",
+      "Blockchain Fundamentals",
       "Decentralized Finance",
       "Cryptocurrency Economics",
       "Web3 Application Development",
-      "Blockchain Security",
-      "NFT Creation and Management",
-      "Tokenomics",
-      "Blockchain Scalability Solutions",
-      "Crypto Trading Strategies",
+      "NFT Creation and Marketing",
+      "Blockchain for Business",
+      "Cryptocurrency Trading Strategies",
+      "Web3 Security Essentials",
+      "Decentralized App Development",
+      "Tokenomics and ICO Strategies", // New
+      "Blockchain Governance and Regulation", // New
+      "Advanced Blockchain Programming", // New
+      "Web3 Marketing and Community Building", // New
+      "Introduction to Cryptocurrency Mining", // New
+      "Interoperability in Blockchain", // New
+      "Data Privacy in Web3", // New
+      "Building Decentralized Autonomous Organizations (DAOs)", // New
+      "Blockchain Project Management", // New
+      "Smart Contract Security Auditing", // New
+      "Cross-Chain Development", // New
     ];
+
     const institutions = [
       "Ethereum Academy",
       "Blockchain University",
       "Crypto Institute",
       "DeFi School",
       "Web3 College",
-      "Blockchain Tech Institute",
-      "Decentralized Learning Center",
-      "Crypto Innovation Hub",
-      "Blockchain Research Academy",
-      "Digital Asset University",
+      "Future of Finance Institute",
+      "Digital Currency Academy",
+      "Tech Blockchain School",
+      "Crypto Innovation Lab",
+      "Web3 Development Institute",
+      "Blockchain Research Institute", // New
+      "Global Blockchain Institute", // New
+      "Crypto Academy Online", // New
+      "NextGen Blockchain School", // New
+      "Fintech & Blockchain Academy", // New
+      "Decentralized Tech University", // New
+      "Digital Ledger Academy", // New
+      "Crypto Currency Academy", // New
+      "Metaverse Development Institute", // New
+      "Distributed Ledger Technologies Institute", // New
+      "Blockchain Strategy Institute", // New
     ];
-    // Convert the name string to a tensor
-    const nameTensor = tf.tensor1d(name.split("").map((c) => c.charCodeAt(0)));
 
-    // Reduce the tensor by summing the values to get a single number (hash)
-    const nameHash = nameTensor.sum().dataSync()[0];
-
-    // Compute the course and institution index using modulus
-    const courseIndex = nameHash % courses.length;
-    const institutionIndex = (nameHash * 31) % institutions.length;
-
-    // Clean up tensor to avoid memory leaks
-    nameTensor.dispose();
-
-    // Return the recommended course and institution
     return {
-      courseName: courses[courseIndex],
-      institutionName: institutions[institutionIndex],
+      courseName: courses[predictedCourseIndex],
+      institutionName: institutions[predictedInstitutionIndex],
     };
   };
   const renderHomePage = () => (
