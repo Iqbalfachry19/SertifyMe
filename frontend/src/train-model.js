@@ -29,7 +29,17 @@ const courses = [
   "Building Decentralized Autonomous Organizations (DAOs)", // New
   "Blockchain Project Management", // New
   "Smart Contract Security Auditing", // New
-  "Cross-Chain Development" // New
+  "Cross-Chain Development", // New
+    "Blockchain Scalability Solutions",
+  "Quantum Computing and Blockchain",
+  "Blockchain in Supply Chain Management",
+  "Decentralized Identity Systems",
+  "Blockchain for Social Impact",
+  "Advanced Cryptography for Blockchain",
+  "Blockchain in Healthcare",
+  "Legal Aspects of Blockchain Technology",
+  "Blockchain for Internet of Things (IoT)",
+  "Sustainable Blockchain Solutions"
 ];
 
 
@@ -54,7 +64,17 @@ const institutions = [
   "Crypto Currency Academy", // New
   "Metaverse Development Institute", // New
   "Distributed Ledger Technologies Institute", // New
-  "Blockchain Strategy Institute" // New
+  "Blockchain Strategy Institute", // New
+    "Blockchain Innovation Center",
+  "Crypto Economics Institute",
+  "Web3 Pioneers Academy",
+  "Decentralized Systems University",
+  "Blockchain Entrepreneurship School",
+  "Future of Web3 Institute",
+  "Crypto Governance Academy",
+  "Blockchain for Sustainability College",
+  "Digital Asset Management Institute",
+  "Decentralized Finance University"
 ];
 
 
