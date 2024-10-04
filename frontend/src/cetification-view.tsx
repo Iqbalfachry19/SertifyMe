@@ -224,7 +224,7 @@ export default function CertificateView({
                   className="bg-blue-600 hover:bg-blue-700"
                   onClick={downloadCertificate}
                 >
-                  <Download className=" h-4 w-4" />
+                  <Download className="mr-2 h-4 w-4" />
                   {t("downloadCertificate")}
                 </Button>
                 <Dialog>
