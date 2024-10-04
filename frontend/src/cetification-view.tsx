@@ -2,8 +2,17 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Award, Download } from "lucide-react";
+import { Award, Download, Share2 } from "lucide-react";
 import { jsPDF } from "jspdf";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Facebook, Twitter, Linkedin, Mail } from "lucide-react";
 
 interface Certificate {
   recipientName: string;
@@ -111,6 +120,47 @@ export default function CertificateView({
     );
   };
 
+  const shareCertificate = (platform: string) => {
+    if (!selectedCertificate) return;
+
+    const text = `${t("checkOutMyCertificate")}: ${
+      selectedCertificate.courseName
+    } ${t("from")} ${selectedCertificate.institutionName}`;
+    const url = `https://sertifyme.com/certificate/${selectedCertificate.courseName}`;
+
+    switch (platform) {
+      case "facebook":
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            url
+          )}`,
+          "_blank"
+        );
+        break;
+      case "twitter":
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            text
+          )}&url=${encodeURIComponent(url)}`,
+          "_blank"
+        );
+        break;
+      case "linkedin":
+        window.open(
+          `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+            url
+          )}&title=${encodeURIComponent(text)}`,
+          "_blank"
+        );
+        break;
+      case "email":
+        window.location.href = `mailto:?subject=${encodeURIComponent(
+          t("checkOutMyCertificate")
+        )}&body=${encodeURIComponent(text + "\n\n" + url)}`;
+        break;
+    }
+  };
+
   if (!certificates || certificates.length === 0) {
     return (
       <div className="text-center py-8">
@@ -166,14 +216,63 @@ export default function CertificateView({
               <p className="text-md text-gray-600">
                 {t("issuedOn")} {formatDate(selectedCertificate.issueDate)}
               </p>
-              <div className="pt-4">
+              <div
+                className="pt-4 flex flex-col
+               justify-center items-center "
+              >
                 <Button
                   className="bg-blue-600 hover:bg-blue-700"
                   onClick={downloadCertificate}
                 >
-                  <Download className="mr-2 h-4 w-4" />
+                  <Download className=" h-4 w-4" />
                   {t("downloadCertificate")}
                 </Button>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="bg-green-600 mt-2 hover:bg-green-700">
+                      <Share2 className="mr-2 h-4 w-4" />
+                      {t("shareCertificate")}
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>{t("shareCertificate")}</DialogTitle>
+                      <DialogDescription>
+                        {t("choosePlatformToShare")}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex justify-center space-x-4 mt-4">
+                      <Button
+                        onClick={() => shareCertificate("facebook")}
+                        className="bg-blue-600 hover:bg-blue-700"
+                      >
+                        <Facebook className="mr-2 h-4 w-4" />
+                        Facebook
+                      </Button>
+                      <Button
+                        onClick={() => shareCertificate("twitter")}
+                        className="bg-sky-500 hover:bg-sky-600"
+                      >
+                        <Twitter className="mr-2 h-4 w-4" />
+                        Twitter
+                      </Button>
+                      <Button
+                        onClick={() => shareCertificate("linkedin")}
+                        className="bg-blue-700 hover:bg-blue-800"
+                      >
+                        <Linkedin className="mr-2 h-4 w-4" />
+                        LinkedIn
+                      </Button>
+                      <Button
+                        onClick={() => shareCertificate("email")}
+                        className="bg-red-600 hover:bg-red-700"
+                      >
+                        <Mail className="mr-2 h-4 w-4" />
+                        Email
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </CardContent>

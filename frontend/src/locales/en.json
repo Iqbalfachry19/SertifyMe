@@ -52,5 +52,9 @@
   "subscribe": "Subscribe",
   "subscribeText": "Get the latest news and updates from SertifyMe.",
   "emailPlaceholder": "Enter your email",
-  "allRightsReserved": "All rights reserved"
+  "allRightsReserved": "All rights reserved",
+  "shareCertificate": "Share Certificate",
+  "choosePlatformToShare": "Choose a platform to share your certificate",
+  "checkOutMyCertificate": "Check out my certificate",
+  "from": "from"
 }

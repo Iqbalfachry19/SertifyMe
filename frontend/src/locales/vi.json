@@ -52,5 +52,9 @@
   "subscribe": "Đăng ký",
   "subscribeText": "Nhận tin tức và cập nhật mới nhất từ SertifyMe.",
   "emailPlaceholder": "Nhập email của bạn",
-  "allRightsReserved": "Bản quyền đã được bảo hộ"
+  "allRightsReserved": "Bản quyền đã được bảo hộ",
+   "shareCertificate": "Chia sẻ Chứng chỉ",
+  "choosePlatformToShare": "Chọn nền tảng để chia sẻ chứng chỉ của bạn",
+  "checkOutMyCertificate": "Xem chứng chỉ của tôi",
+  "from": "từ"
 }

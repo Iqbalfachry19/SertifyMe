@@ -52,5 +52,9 @@
   "subscribe": "Langgan",
   "subscribeText": "Dapatkan berita dan kemas kini terkini dari SertifyMe.",
   "emailPlaceholder": "Masukkan e-mel anda",
-  "allRightsReserved": "Hak Cipta Terpelihara"
+  "allRightsReserved": "Hak Cipta Terpelihara",
+    "shareCertificate": "Kongsi Sijil",
+  "choosePlatformToShare": "Pilih platform untuk berkongsi sijil anda",
+  "checkOutMyCertificate": "Lihat sijil saya",
+  "from": "daripada"
 }

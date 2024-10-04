@@ -52,5 +52,9 @@
   "subscribe": "สมัครรับข่าวสาร",
   "subscribeText": "รับข่าวสารและการอัปเดตล่าสุดจาก SertifyMe",
   "emailPlaceholder": "ป้อนอีเมลของคุณ",
-  "allRightsReserved": "สงวนลิขสิทธิ์"
+  "allRightsReserved": "สงวนลิขสิทธิ์",
+   "shareCertificate": "แชร์ใบรับรอง",
+  "choosePlatformToShare": "เลือกแพลตฟอร์มเพื่อแชร์ใบรับรองของคุณ",
+  "checkOutMyCertificate": "ดูใบรับรองของฉัน",
+  "from": "จาก"
 }

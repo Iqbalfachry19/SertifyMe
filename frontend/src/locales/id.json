@@ -52,5 +52,9 @@
   "subscribe": "Berlangganan",
   "subscribeText": "Dapatkan berita dan pembaruan terbaru dari SertifyMe.",
   "emailPlaceholder": "Masukkan email Anda",
-  "allRightsReserved": "Hak Cipta Dilindungi"
+  "allRightsReserved": "Hak Cipta Dilindungi",
+    "shareCertificate": "Bagikan Sertifikat",
+  "choosePlatformToShare": "Pilih platform untuk membagikan sertifikat Anda",
+  "checkOutMyCertificate": "Lihat sertifikat saya",
+  "from": "dari"
 }
