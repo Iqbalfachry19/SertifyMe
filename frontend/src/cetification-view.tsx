@@ -126,7 +126,7 @@ export default function CertificateView({
     const text = `${t("checkOutMyCertificate")}: ${
       selectedCertificate.courseName
     } ${t("from")} ${selectedCertificate.institutionName}`;
-    const url = `https://sertifyme.com/certificate/${selectedCertificate.courseName}`;
+    const url = `https://sertifyme.netlify.app/certificate/${selectedCertificate.courseName}`;
 
     switch (platform) {
       case "facebook":
