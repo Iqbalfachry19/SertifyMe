@@ -342,6 +342,16 @@ export default function App() {
       "Legal Aspects of Blockchain Technology",
       "Blockchain for Internet of Things (IoT)",
       "Sustainable Blockchain Solutions",
+      "Decentralized Storage Solutions",
+      "Blockchain Interoperability Protocols",
+      "Green Blockchain Technologies",
+      "Blockchain-based Voting Systems",
+      "AI Integration with Blockchain",
+      "Blockchain for Real Estate",
+      "Decentralized Gaming Platforms",
+      "Blockchain in Education",
+      "Privacy Coins and Anonymity",
+      "Blockchain-based Supply Chain Transparency",
     ];
 
     const institutions = [
@@ -366,16 +376,16 @@ export default function App() {
       "Metaverse Development Institute", // New
       "Distributed Ledger Technologies Institute", // New
       "Blockchain Strategy Institute", // New
-      "Blockchain Innovation Center",
-      "Crypto Economics Institute",
-      "Web3 Pioneers Academy",
-      "Decentralized Systems University",
-      "Blockchain Entrepreneurship School",
-      "Future of Web3 Institute",
-      "Crypto Governance Academy",
-      "Blockchain for Sustainability College",
-      "Digital Asset Management Institute",
-      "Decentralized Finance University",
+      "Global Decentralized Technologies Institute",
+      "Advanced Blockchain Research Lab",
+      "International Blockchain Academy",
+      "Smart Ledger University",
+      "Blockchain Strategy and Policy Institute",
+      "Decentralized Technologies Innovation Hub",
+      "Next Generation Crypto Institute",
+      "Blockchain and AI Integration School",
+      "Sustainable Ledger Academy",
+      "Blockchain Applications Institute",
     ];
 
     return {

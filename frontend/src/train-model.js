@@ -39,7 +39,17 @@ const courses = [
   "Blockchain in Healthcare",
   "Legal Aspects of Blockchain Technology",
   "Blockchain for Internet of Things (IoT)",
-  "Sustainable Blockchain Solutions"
+  "Sustainable Blockchain Solutions",
+   "Decentralized Storage Solutions",
+  "Blockchain Interoperability Protocols",
+  "Green Blockchain Technologies",
+  "Blockchain-based Voting Systems",
+  "AI Integration with Blockchain",
+  "Blockchain for Real Estate",
+  "Decentralized Gaming Platforms",
+  "Blockchain in Education",
+  "Privacy Coins and Anonymity",
+  "Blockchain-based Supply Chain Transparency"
 ];
 
 
@@ -65,16 +75,16 @@ const institutions = [
   "Metaverse Development Institute", // New
   "Distributed Ledger Technologies Institute", // New
   "Blockchain Strategy Institute", // New
-    "Blockchain Innovation Center",
-  "Crypto Economics Institute",
-  "Web3 Pioneers Academy",
-  "Decentralized Systems University",
-  "Blockchain Entrepreneurship School",
-  "Future of Web3 Institute",
-  "Crypto Governance Academy",
-  "Blockchain for Sustainability College",
-  "Digital Asset Management Institute",
-  "Decentralized Finance University"
+    "Global Decentralized Technologies Institute",
+  "Advanced Blockchain Research Lab",
+  "International Blockchain Academy",
+  "Smart Ledger University",
+  "Blockchain Strategy and Policy Institute",
+  "Decentralized Technologies Innovation Hub",
+  "Next Generation Crypto Institute",
+  "Blockchain and AI Integration School",
+  "Sustainable Ledger Academy",
+  "Blockchain Applications Institute"
 ];
 
 
@@ -104,21 +114,27 @@ function generateRandomTrainingData(numSamples) {
 }
 
 // Generate random training data
-const { trainingData, courseData, institutionData } = generateRandomTrainingData(1000);
+const { trainingData, courseData, institutionData } = generateRandomTrainingData(10000);
 
 // Step 2: Create the Model using Functional API
 const input = tf.input({ shape: [1] }); // Input layer
 
 // Create a few hidden layers
 let hidden = input;
-const numHiddenLayers = 4; // Total number of hidden layers
+const numHiddenLayers = 8; // Total number of hidden layers
 
 for (let i = 0; i < numHiddenLayers; i++) {
-  const randomUnits = Math.floor(Math.random() * 32) + 8; // Random units between 8 and 40
+ const units = 128;
   hidden = tf.layers.dense({
-    units: randomUnits,
-    activation: "relu"
+    units: units,
+    activation: "relu",
+    kernelRegularizer: tf.regularizers.l2({ l2: 0.001 })
   }).apply(hidden);
+   hidden = tf.layers.batchNormalization().apply(hidden); // Menambahkan batch normalization
+  
+  if (i < numHiddenLayers - 1) { // Tidak menerapkan dropout pada layer terakhir
+    hidden = tf.layers.dropout({ rate: 0.2 }).apply(hidden); // Mengurangi dropout rate
+  }
 }
 
 // Create two output layers for courses and institutions
@@ -142,7 +158,7 @@ const multiOutputModel = tf.model({
 
 // Step 3: Compile the model
 multiOutputModel.compile({
-  optimizer: "adam",
+  optimizer: tf.train.adamax(0.0005), // Menggunakan learning rate yang lebih kecil
   loss: {
     courseOutput: "sparseCategoricalCrossentropy",
     institutionOutput: "sparseCategoricalCrossentropy"
@@ -154,13 +170,17 @@ multiOutputModel.compile({
 });
 
 async function trainAndSaveModel() {
-  // Train the model with multi-output
+  // Melatih model dengan multi-output
   await multiOutputModel.fit(trainingData, [courseData, institutionData], {
-    epochs: 100,
+    epochs: 300, // Meningkatkan jumlah epoch
+    batchSize: 64, // Menambahkan batch size
     shuffle: true,
-    validationSplit: 0.2, // Use 20% of the data for validation
+    validationSplit: 0.2,
+    // callbacks: [
+    //   tf.callbacks.earlyStopping({ monitor: 'val_loss', patience: 20 }), // Meningkatkan patience
+    //   tf.callbacks.learningRateScheduler((epoch, lr) => lr * 0.99) // Menambahkan learning rate decay
+    // ]
   });
-
   await multiOutputModel.save('file://./public/ai-suggestions-model');
 
   console.log("Model trained and saved.");
