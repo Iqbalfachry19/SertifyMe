@@ -50,58 +50,55 @@ export default function CertificateView({
   const downloadCertificate = () => {
     if (!selectedCertificate) return;
 
-    const doc = new jsPDF();
+    const doc = new jsPDF({
+      orientation: "landscape",
+      unit: "mm",
+      format: "a4",
+    });
 
-    // Set background color
-    doc.setFillColor(240, 248, 255); // Light blue background
-    doc.rect(
-      0,
-      0,
-      doc.internal.pageSize.width,
-      doc.internal.pageSize.height,
-      "F"
-    );
+    // Set background
+    doc.setFillColor(240, 248, 255);
+    doc.rect(0, 0, 297, 210, "F");
 
-    // Add border
-    doc.setDrawColor(0, 0, 255);
-    doc.setLineWidth(5);
-    doc.rect(
-      10,
-      10,
-      doc.internal.pageSize.width - 20,
-      doc.internal.pageSize.height - 20
-    );
+    // Add decorative border
+    doc.setDrawColor(0, 48, 135);
+    doc.setLineWidth(2);
+    doc.roundedRect(10, 10, 277, 190, 5, 5);
+
+    // Add header
+    doc.setFillColor(0, 48, 135);
+    doc.rect(10, 10, 277, 30, "F");
 
     // Add title
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(24);
-    doc.setTextColor(0, 0, 128); // Navy blue
-    doc.text(t("certificateOfCompletion"), 105, 40, { align: "center" });
+    doc.setFontSize(28);
+    doc.setTextColor(255, 255, 255);
+    doc.text(t("certificateOfCompletion"), 148.5, 30, { align: "center" });
 
     // Add content
     doc.setFont("helvetica", "normal");
     doc.setFontSize(16);
-    doc.setTextColor(0, 0, 0); // Black
-    doc.text(t("thisCertifiesThat"), 105, 60, { align: "center" });
+    doc.setTextColor(0, 0, 0);
+    doc.text(t("thisCertifiesThat"), 148.5, 60, { align: "center" });
 
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.text(selectedCertificate.recipientName, 105, 75, { align: "center" });
+    doc.setFontSize(24);
+    doc.text(selectedCertificate.recipientName, 148.5, 75, { align: "center" });
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(16);
-    doc.text(t("hasSuccessfullyCompleted"), 105, 90, { align: "center" });
+    doc.text(t("hasSuccessfullyCompleted"), 148.5, 90, { align: "center" });
 
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.text(selectedCertificate.courseName, 105, 105, { align: "center" });
+    doc.setFontSize(22);
+    doc.text(selectedCertificate.courseName, 148.5, 105, { align: "center" });
 
     doc.setFont("helvetica", "normal");
     doc.setFontSize(16);
-    doc.text(t("offeredBy"), 105, 120, { align: "center" });
+    doc.text(t("offeredBy"), 148.5, 120, { align: "center" });
 
     doc.setFont("helvetica", "bold");
-    doc.text(selectedCertificate.institutionName, 105, 135, {
+    doc.text(selectedCertificate.institutionName, 148.5, 135, {
       align: "center",
     });
 
@@ -109,7 +106,7 @@ export default function CertificateView({
     doc.setFontSize(14);
     doc.text(
       `${t("issuedOn")} ${formatDate(selectedCertificate.issueDate)}`,
-      105,
+      148.5,
       155,
       { align: "center" }
     );
