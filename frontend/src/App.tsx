@@ -82,7 +82,6 @@ interface Certificate {
   issueDate: number; // Assuming this is a timestamp
 }
 export default function App() {
-  const CONTRACT_ADDRESS = "0xfd71381b49CA874D269eE45A84f25744a3F9433C";
   const [recipientAddress, setRecipientAddress] = useState<string>("");
   const [recipientName, setRecipientName] = useState<string>("");
   const [courseName, setCourseName] = useState<string>("");
@@ -99,6 +98,27 @@ export default function App() {
   );
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
+  const CONTRACT_ADDRESSES = {
+    "84532": "0xfd71381b49CA874D269eE45A84f25744a3F9433C", // Base Sepolia
+    "919": "0x462B9bE8180d84A01587492C2317cE8A084535F7", // Mode Testnet
+  } as const;
+
+  type ContractAddressKeys = keyof typeof CONTRACT_ADDRESSES;
+
+  const NETWORKS = {
+    "0x14a34": {
+      chainName: "Base Sepolia",
+      rpcUrl: "https://sepolia.base.org",
+      blockExplorerUrl: "https://sepolia-explorer.base.org",
+    },
+    "0x397": {
+      chainName: "Mode Testnet",
+      rpcUrl: "https://sepolia.mode.network",
+      blockExplorerUrl: "https://sepolia.explorer.mode.network",
+    },
+  } as const;
+
+  type NetworkKeys = keyof typeof NETWORKS;
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
@@ -109,18 +129,29 @@ export default function App() {
         alert("Please install MetaMask!");
         return;
       }
-      const chainId = "0x14a34"; // Example for Ethereum Mainnet (0x1). Change to desired network chain ID.
-      const correctNetwork = await switchToNetwork(chainId);
 
-      if (!correctNetwork) {
-        return; // Stop if network switching failed or was canceled by user.
-      }
       const res = await fetch("/CertificationNFT.json");
       const CertificationNFT = await res.json();
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
+
+      // Get the current network chain ID
+      const network = await provider.getNetwork();
+      const chainId = network.chainId;
+      // Determine the correct contract address based on the network
+      const contractAddress =
+        CONTRACT_ADDRESSES[chainId.toString() as ContractAddressKeys];
+
+      if (!contractAddress) {
+        alert(
+          "Unsupported network. Please switch to Base Sepolia or Mode Testnet."
+        );
+        return;
+      }
+
+      // Initialize the contract with the correct address
       const contractInstance = new ethers.Contract(
-        CONTRACT_ADDRESS,
+        contractAddress,
         CertificationNFT.abi,
         signer
       );
@@ -130,12 +161,13 @@ export default function App() {
 
     init();
   }, []);
+
   useEffect(() => {
     if (contract) {
       fetchCertificates();
     }
   }, [contract]);
-  const switchToNetwork = async (requiredChainId: string) => {
+  const switchToNetwork = async (chainId: string) => {
     if (typeof window.ethereum === "undefined") {
       alert(
         "MetaMask is not installed. Please install MetaMask and try again."
@@ -146,52 +178,16 @@ export default function App() {
       const currentChainId = await window.ethereum.request({
         method: "eth_chainId",
       });
+      if (currentChainId === chainId) return true;
 
-      // If the user is already on the correct network
-      if (currentChainId === requiredChainId) {
-        return true;
-      }
-
-      // Prompt user to switch to the correct network
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [{ chainId: requiredChainId }],
+        params: [{ chainId }],
       });
-
       return true;
     } catch (error) {
-      const metamaskError = error as { code: number; message: string };
-
-      if (metamaskError.code === 4902) {
-        // If the network has not been added to MetaMask
-        try {
-          // Add the network
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [
-              {
-                chainId: requiredChainId,
-                chainName: "Base Sepolia", // Add desired network details
-                nativeCurrency: {
-                  name: "ETH", // Native currency (e.g., ETH for Ethereum)
-                  symbol: "ETH",
-                  decimals: 18,
-                },
-                rpcUrls: ["https://sepolia.base.org"], // RPC URL
-                blockExplorerUrls: ["https://sepolia-explorer.base.org"], // Block explorer URL
-              },
-            ],
-          });
-
-          return true;
-        } catch (addError) {
-          console.error("Failed to add the network:", addError);
-          return false;
-        }
-      } else {
-        console.error("Failed to switch the network:", error);
-        return false;
-      }
+      console.error("Failed to switch network:", error);
+      return false;
     }
   };
   const renderLanguageSelector = () => (
@@ -692,7 +688,23 @@ export default function App() {
               >
                 {t("viewCertificates")}
               </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">Switch Network</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {Object.keys(NETWORKS).map((chainId) => (
+                    <DropdownMenuItem
+                      key={chainId}
+                      onClick={() => switchToNetwork(chainId)}
+                    >
+                      Switch to {NETWORKS[chainId as NetworkKeys].chainName}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
               {renderLanguageSelector()}
+
               <ConnectWallet />
             </div>
             <div className="flex md:hidden">
