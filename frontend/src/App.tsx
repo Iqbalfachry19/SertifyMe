@@ -96,13 +96,25 @@ export default function App() {
   const [aiSuggestions, setAiSuggestions] = useState<AISuggestions | null>(
     null
   );
+  const [currentNetwork, setCurrentNetwork] = useState<string>("");
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
   const CONTRACT_ADDRESSES = {
     "84532": "0xfd71381b49CA874D269eE45A84f25744a3F9433C", // Base Sepolia
     "919": "0x462B9bE8180d84A01587492C2317cE8A084535F7", // Mode Testnet
   } as const;
+  const getCurrentNetwork = async () => {
+    if (!window.ethereum) {
+      alert("Please install MetaMask!");
+      return;
+    }
 
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const network = await provider.getNetwork();
+    setCurrentNetwork(
+      NETWORKS[network.chainId.toString() as NetworkKeys].chainName
+    );
+  };
   type ContractAddressKeys = keyof typeof CONTRACT_ADDRESSES;
 
   const NETWORKS = {
@@ -159,6 +171,7 @@ export default function App() {
   };
 
   useEffect(() => {
+    getCurrentNetwork();
     initContract();
   }, []);
 
@@ -188,6 +201,7 @@ export default function App() {
 
       // Re-initialize the contract with the new network
       await initContract();
+      await getCurrentNetwork();
 
       return true;
     } catch (error) {
@@ -696,7 +710,11 @@ export default function App() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">Switch Network</Button>
+                  <Button variant="outline">
+                    {currentNetwork
+                      ? `Switch Network (Current: ${currentNetwork})`
+                      : "Switch Network"}
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {Object.keys(NETWORKS).map((chainId) => (
