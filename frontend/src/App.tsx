@@ -111,9 +111,17 @@ export default function App() {
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const network = await provider.getNetwork();
-    setCurrentNetwork(
-      NETWORKS[network.chainId.toString() as NetworkKeys].chainName
-    );
+    const chainIdDecimal = network.chainId; // This is the decimal chain ID
+
+    // Convert decimal to hex
+    const chainIdHex = `0x${chainIdDecimal.toString(16)}`;
+
+    // Look up the network name using the hex chain ID
+    if (NETWORKS[chainIdHex as NetworkKeys]) {
+      setCurrentNetwork(NETWORKS[chainIdHex as NetworkKeys].chainName);
+    } else {
+      setCurrentNetwork("Unsupported Network");
+    }
   };
   type ContractAddressKeys = keyof typeof CONTRACT_ADDRESSES;
 
