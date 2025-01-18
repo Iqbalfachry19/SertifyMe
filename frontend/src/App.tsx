@@ -710,7 +710,11 @@ export default function App() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">{currentNetwork}</Button>
+                  <Button variant="outline">
+                    {currentNetwork
+                      ? `Switch Network (Current: ${currentNetwork})`
+                      : "Switch Network"}
+                  </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {Object.keys(NETWORKS).map((chainId) => (
@@ -723,6 +727,7 @@ export default function App() {
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+
               {renderLanguageSelector()}
 
               <ConnectWallet />
