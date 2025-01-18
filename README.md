@@ -73,7 +73,8 @@ The contract is designed to mint NFTs representing certificates, containing key 
 
 The CertificationNFT contract is deployed on the Base Sepolia Testnet with the following contract address:
 
-- **Contract Address:** 0xfd71381b49CA874D269eE45A84f25744a3F9433C
+- **Base Sepolia Contract Address:** 0xfd71381b49CA874D269eE45A84f25744a3F9433C
+- **Mode Sepolia Contract Address:** 0x462B9bE8180d84A01587492C2317cE8A084535F7
 
 ### Steps to Deploy
 
