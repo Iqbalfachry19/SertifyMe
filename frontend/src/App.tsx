@@ -123,43 +123,43 @@ export default function App() {
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
-  useEffect(() => {
-    const init = async () => {
-      if (!window.ethereum) {
-        alert("Please install MetaMask!");
-        return;
-      }
+  const initContract = async () => {
+    if (!window.ethereum) {
+      alert("Please install MetaMask!");
+      return;
+    }
 
-      const res = await fetch("/CertificationNFT.json");
-      const CertificationNFT = await res.json();
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
+    const res = await fetch("/CertificationNFT.json");
+    const CertificationNFT = await res.json();
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
 
-      // Get the current network chain ID
-      const network = await provider.getNetwork();
-      const chainId = network.chainId;
-      // Determine the correct contract address based on the network
-      const contractAddress =
-        CONTRACT_ADDRESSES[chainId.toString() as ContractAddressKeys];
+    // Get the current network chain ID
+    const network = await provider.getNetwork();
+    const chainId = network.chainId.toString();
 
-      if (!contractAddress) {
-        alert(
-          "Unsupported network. Please switch to Base Sepolia or Mode Testnet."
-        );
-        return;
-      }
+    // Determine the correct contract address based on the network
+    const contractAddress = CONTRACT_ADDRESSES[chainId as ContractAddressKeys];
 
-      // Initialize the contract with the correct address
-      const contractInstance = new ethers.Contract(
-        contractAddress,
-        CertificationNFT.abi,
-        signer
+    if (!contractAddress) {
+      alert(
+        "Unsupported network. Please switch to Base Sepolia or Mode Testnet."
       );
+      return;
+    }
 
-      setContract(contractInstance);
-    };
+    // Initialize the contract with the correct address
+    const contractInstance = new ethers.Contract(
+      contractAddress,
+      CertificationNFT.abi,
+      signer
+    );
 
-    init();
+    setContract(contractInstance);
+  };
+
+  useEffect(() => {
+    initContract();
   }, []);
 
   useEffect(() => {
@@ -167,12 +167,13 @@ export default function App() {
       fetchCertificates();
     }
   }, [contract]);
+
   const switchToNetwork = async (chainId: string) => {
     if (typeof window.ethereum === "undefined") {
       alert(
         "MetaMask is not installed. Please install MetaMask and try again."
       );
-      return false; // Exit the function if MetaMask is not available
+      return false;
     }
     try {
       const currentChainId = await window.ethereum.request({
@@ -184,12 +185,17 @@ export default function App() {
         method: "wallet_switchEthereumChain",
         params: [{ chainId }],
       });
+
+      // Re-initialize the contract with the new network
+      await initContract();
+
       return true;
     } catch (error) {
       console.error("Failed to switch network:", error);
       return false;
     }
   };
+
   const renderLanguageSelector = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
