@@ -115,12 +115,10 @@ export default function App() {
 
     // Convert decimal to hex
     const chainIdHex = `0x${chainIdDecimal.toString(16)}`;
-
+    console.log(chainIdHex);
     // Look up the network name using the hex chain ID
     if (NETWORKS[chainIdHex as NetworkKeys]) {
       setCurrentNetwork(NETWORKS[chainIdHex as NetworkKeys].chainName);
-    } else {
-      setCurrentNetwork("Unsupported Network");
     }
   };
   type ContractAddressKeys = keyof typeof CONTRACT_ADDRESSES;
@@ -719,9 +717,7 @@ export default function App() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline">
-                    {currentNetwork
-                      ? `Switch Network (Current: ${currentNetwork})`
-                      : "Switch Network"}
+                    {currentNetwork ? `${currentNetwork}` : "Switch Network"}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
