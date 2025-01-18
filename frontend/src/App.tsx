@@ -710,11 +710,7 @@ export default function App() {
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline">
-                    {currentNetwork
-                      ? `Switch Network (Current: ${currentNetwork})`
-                      : "Switch Network"}
-                  </Button>
+                  <Button variant="outline">{currentNetwork}</Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {Object.keys(NETWORKS).map((chainId) => (
