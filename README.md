@@ -18,7 +18,7 @@ The project leverages Solidity smart contracts and the ERC721 standard to create
 
 - **Solidity:** Smart contract programming language used for writing the CertificationNFT contract.
 - **OpenZeppelin Contracts:** Industry-standard library providing reusable implementations of ERC721 and access control.
-- **Ethereum Blockchain:** Deployed on the Ethereum blockchain, ensuring decentralization and transparency.
+- **Ethereum Blockchain & L2 Blockchain:** Deployed on the Ethereum blockchain & L2 blockchain, ensuring decentralization and transparency.
 
 ## Smart Contract Details
 
