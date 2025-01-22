@@ -1,8 +1,8 @@
-# SertifyMe - Based Sea Hackathon Project
+# SertifyMe -  CertificationNFT Project
 
 ## Overview
 
-**SertifyMe** is a Base-Based decentralized application (DApp) that allows institutions to issue verifiable digital certifications as NFTs (Non-Fungible Tokens) on the blockchain. This innovative approach enables recipients to securely and transparently prove their achievements, while institutions can efficiently manage the issuance and verification of these credentials.
+**SertifyMe** is a decentralized application (DApp) that allows institutions to issue verifiable digital certifications as NFTs (Non-Fungible Tokens) on the blockchain. This innovative approach enables recipients to securely and transparently prove their achievements, while institutions can efficiently manage the issuance and verification of these credentials.
 
 The project leverages Solidity smart contracts and the ERC721 standard to create unique, tokenized credentials that include detailed information about the recipient, course, and institution.
 
@@ -71,7 +71,7 @@ The contract is designed to mint NFTs representing certificates, containing key 
 
 ## Deployment
 
-The CertificationNFT contract is deployed on the Base Sepolia Testnet with the following contract address:
+The CertificationNFT contract is deployed on the Base Sepolia Testnet, Mode Sepolia Testnet, Manta Pacific Sepolia Testnet with the following contract address:
 
 - **Base Sepolia Contract Address:** 0xfd71381b49CA874D269eE45A84f25744a3F9433C
 - **Mode Sepolia Contract Address:** 0x462B9bE8180d84A01587492C2317cE8A084535F7
