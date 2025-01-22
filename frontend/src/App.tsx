@@ -96,6 +96,7 @@ export default function App() {
   const [aiSuggestions, setAiSuggestions] = useState<AISuggestions | null>(
     null
   );
+  const [isMinting, setIsMinting] = useState(false);
   const [currentNetwork, setCurrentNetwork] = useState<string>("");
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
@@ -256,7 +257,7 @@ export default function App() {
       setError("Contract not initialized");
       return;
     }
-
+    setIsMinting(true);
     try {
       const tx = await contract.mintCertificate(
         recipientAddress,
@@ -272,6 +273,8 @@ export default function App() {
       if (err instanceof Error) {
         setError(err.message);
       }
+    } finally {
+      setIsMinting(false);
     }
   };
 
@@ -641,7 +644,7 @@ export default function App() {
                       required
                     />
                   </div>
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full" disabled={isMinting}>
                     {t("mintCertificate")}
                   </Button>
                 </form>
