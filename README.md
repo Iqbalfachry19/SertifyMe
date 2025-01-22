@@ -75,7 +75,8 @@ The CertificationNFT contract is deployed on the Base Sepolia Testnet with the f
 
 - **Base Sepolia Contract Address:** 0xfd71381b49CA874D269eE45A84f25744a3F9433C
 - **Mode Sepolia Contract Address:** 0x462B9bE8180d84A01587492C2317cE8A084535F7
-
+- **Manta Pacific Sepolia Contract Address:** 0x0a3f3287146ce135872DCc3c2e47b51a8D431a58
+- 
 ### Steps to Deploy
 
 1. Install Truffle or Hardhat.

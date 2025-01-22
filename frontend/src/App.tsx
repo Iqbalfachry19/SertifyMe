@@ -102,6 +102,7 @@ export default function App() {
   const CONTRACT_ADDRESSES = {
     "84532": "0xfd71381b49CA874D269eE45A84f25744a3F9433C", // Base Sepolia
     "919": "0x462B9bE8180d84A01587492C2317cE8A084535F7", // Mode Testnet
+    "3441006": "0x0a3f3287146ce135872DCc3c2e47b51a8D431a58",
   } as const;
   const getCurrentNetwork = async () => {
     if (!window.ethereum) {
@@ -133,6 +134,12 @@ export default function App() {
       chainName: "Mode Testnet",
       rpcUrl: "https://sepolia.mode.network",
       blockExplorerUrl: "https://sepolia.explorer.mode.network",
+    },
+    "0x34816e": {
+      chainName: "Manta Pacific Sepolia Testnet",
+      rpcUrl: "https://pacific-rpc.sepolia-testnet.manta.network/http",
+      blockExplorerUrl:
+        "https://pacific-explorer.sepolia-testnet.manta.network",
     },
   } as const;
 
