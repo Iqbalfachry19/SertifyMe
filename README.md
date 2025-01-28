@@ -6,7 +6,7 @@
 
 The project leverages Solidity smart contracts and the ERC721 standard to create unique, tokenized credentials that include detailed information about the recipient, course, and institution.
 
-Visit our website for more details: ** [SertifyMe Official Website](https://sertifyme.netlify.app)
+Visit our website for more details: [SertifyMe Official Website](https://sertifyme.netlify.app)
 
 ## Key Features
 
