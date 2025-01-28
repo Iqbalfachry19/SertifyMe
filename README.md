@@ -6,6 +6,8 @@
 
 The project leverages Solidity smart contracts and the ERC721 standard to create unique, tokenized credentials that include detailed information about the recipient, course, and institution.
 
+Visit our website for more details: ** [SertifyMe Official Website](https://sertifyme.netlify.app)
+
 ## Key Features
 
 - **ERC721 Standard:** Utilizes the ERC721 standard for creating and managing unique non-fungible tokens (NFTs) representing certificates.
