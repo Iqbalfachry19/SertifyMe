@@ -56,5 +56,7 @@
     "shareCertificate": "Bagikan Sertifikat",
   "choosePlatformToShare": "Pilih platform untuk membagikan sertifikat Anda",
   "checkOutMyCertificate": "Lihat sertifikat saya",
-  "from": "dari"
+  "from": "dari",
+   "aiAgents": "Agen AI",
+  "aiAgentsDesc": "Manfaatkan agen AI canggih untuk membuat sertifikat dan verifikasi sertifikat."
 }

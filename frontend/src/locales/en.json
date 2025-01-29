@@ -56,5 +56,7 @@
   "shareCertificate": "Share Certificate",
   "choosePlatformToShare": "Choose a platform to share your certificate",
   "checkOutMyCertificate": "Check out my certificate",
-  "from": "from"
+  "from": "from",
+  "aiAgents": "AI Agents",
+  "aiAgentsDesc": "Leverage advanced AI agents for creating certificate and certificate verification."
 }

@@ -56,5 +56,7 @@
     "shareCertificate": "Kongsi Sijil",
   "choosePlatformToShare": "Pilih platform untuk berkongsi sijil anda",
   "checkOutMyCertificate": "Lihat sijil saya",
-  "from": "daripada"
+  "from": "daripada",
+   "aiAgents": "Ejen AI",
+  "aiAgentsDesc": "Manfaatkan ejen AI termaju untuk mencipta sijil dan pengesahan sijil."
 }

@@ -25,7 +25,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Wallet, LogOut } from "lucide-react";
+import { Wallet, LogOut, Brain } from "lucide-react";
 import { WalletOptions } from "../wallet-options";
 import Logo from "../Logo";
 import HeroImage from "../HeroImage";
@@ -489,7 +489,7 @@ export default function Home() {
                 {t("platformAdvantages")}
               </p>
             </div>
-            <dl className="mt-12 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-x-6 sm:gap-y-12 lg:gap-x-8">
+            <dl className="mt-12 space-y-10 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 md:grid-cols-2 lg:grid-cols-4  lg:gap-x-8">
               {[
                 {
                   name: t("blockchainSecurity"),
@@ -505,6 +505,11 @@ export default function Home() {
                   name: t("lifelongAccess"),
                   description: t("lifelongAccessDesc"),
                   icon: Award,
+                },
+                {
+                  name: t("aiAgents"),
+                  description: t("aiAgentsDesc"),
+                  icon: Brain,
                 },
               ].map((feature) => (
                 <div key={feature.name} className="relative">
@@ -705,9 +710,9 @@ export default function Home() {
                 onClick={() => setCurrentView("home")}
                 className={`${
                   currentView === "home"
-                    ? "text-indigo-600 border-indigo-500"
-                    : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+                } px-3 py-2 rounded-md text-sm font-medium transition-all duration-300`}
               >
                 {t("home")}
               </Button>
@@ -718,9 +723,9 @@ export default function Home() {
                 }}
                 className={`${
                   currentView === "mint"
-                    ? "text-indigo-600 border-indigo-500"
-                    : "text-gray-500 hover:text-indigo-600 hover:border-gray-300"
-                } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+                } px-3 py-2 rounded-md text-sm font-medium transition-all duration-300`}
               >
                 {t("mintCertificate")}
               </Button>
@@ -731,9 +736,9 @@ export default function Home() {
                 }}
                 className={`${
                   currentView === "view"
-                    ? "text-indigo-600 border-indigo-500"
-                    : "text-gray-500 hover:text-indigo-600 hover:border-gray-300"
-                } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+                } px-3 py-2 rounded-md text-sm font-medium transition-all duration-300`}
               >
                 {t("viewCertificates")}
               </Button>

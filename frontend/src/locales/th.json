@@ -56,5 +56,7 @@
    "shareCertificate": "แชร์ใบรับรอง",
   "choosePlatformToShare": "เลือกแพลตฟอร์มเพื่อแชร์ใบรับรองของคุณ",
   "checkOutMyCertificate": "ดูใบรับรองของฉัน",
-  "from": "จาก"
+  "from": "จาก",
+  "aiAgents": "เอเจนต์ AI",
+  "aiAgentsDesc": "ใช้ประโยชน์จากเอเจนต์ AI ขั้นสูงสำหรับการสร้างใบรับรองและการตรวจสอบใบรับรอง"
 }
