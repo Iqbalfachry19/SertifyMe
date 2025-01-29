@@ -459,7 +459,7 @@ export default function Home() {
                         setCurrentView("mint");
                         setActiveTab("mint");
                       }}
-                      className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8"
+                      className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white  hover:bg-indigo-50 sm:px-8"
                     >
                       {t("getStarted")}
                     </Button>
@@ -468,7 +468,7 @@ export default function Home() {
                         setCurrentView("view");
                         setActiveTab("view");
                       }}
-                      className="flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-500 bg-opacity-60 hover:bg-opacity-70 sm:px-8"
+                      className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 sm:px-8 transition-all duration-300"
                     >
                       {t("viewCertificates")}
                     </Button>
@@ -799,9 +799,9 @@ export default function Home() {
                 }}
                 className={`${
                   currentView === "home"
-                    ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-                } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+                } block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-all duration-300`}
               >
                 {t("home")}
               </Button>
@@ -813,9 +813,9 @@ export default function Home() {
                 }}
                 className={`${
                   currentView === "mint"
-                    ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-                } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+                } block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-all duration-300`}
               >
                 {t("mintCertificate")}
               </Button>
@@ -827,14 +827,41 @@ export default function Home() {
                 }}
                 className={`${
                   currentView === "view"
-                    ? "bg-indigo-50 border-indigo-500 text-indigo-700"
-                    : "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700"
-                } block pl-3 pr-4 py-2 border-l-4 text-base font-medium w-full text-left`}
+                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+                    : "text-gray-300 hover:text-white hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600"
+                } block px-3 py-2 rounded-md text-base font-medium w-full text-left transition-all duration-300`}
               >
                 {t("viewCertificates")}
               </Button>
-              {renderLanguageSelector()}
-              <ConnectWallet />
+              <div className="space-x-2">
+                {agents?.map((agent: { id: UUID; name: string }) => (
+                  <NavLink to={`/chat/${agent.id}`} className="w-full grow">
+                    <Button variant="outline" className="w-full grow">
+                      Chat
+                    </Button>
+                  </NavLink>
+                ))}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                      {currentNetwork ? `${currentNetwork}` : "Switch Network"}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {Object.keys(NETWORKS).map((chainId) => (
+                      <DropdownMenuItem
+                        key={chainId}
+                        onClick={() => switchToNetwork(chainId)}
+                      >
+                        Switch to {NETWORKS[chainId as NetworkKeys].chainName}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                {renderLanguageSelector()}
+                <ConnectWallet />
+              </div>
             </div>
           </div>
         )}
