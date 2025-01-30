@@ -20,7 +20,7 @@ Visit our website for more details: [SertifyMe Official Website](https://sertify
 
 - **Solidity:** Smart contract programming language used for writing the CertificationNFT contract.
 - **OpenZeppelin Contracts:** Industry-standard library providing reusable implementations of ERC721 and access control.
-- **Ethereum Blockchain & L2 Blockchain:** Deployed on the Ethereum blockchain & L2 blockchain, ensuring decentralization and transparency.
+- **Ethereum L2 Blockchain:** Deployed on the Ethereum L2 blockchain, ensuring decentralization and transparency.
 - **Sertifyme Ai Agents:**  An Eliza framework that integrates with blockchain applications to facilitate contract interactions, automation, and wallet management of CertificationNFT. [SertifyMe Ai Agents](https://github.com/Iqbalfachry19/sertifyme-ai-agents)
 
 ## Smart Contract Details
@@ -79,7 +79,6 @@ The CertificationNFT contract is deployed on the Base Sepolia Testnet, Mode Sepo
 - **Base Sepolia Contract Address:** 0xfd71381b49CA874D269eE45A84f25744a3F9433C
 - **Mode Sepolia Contract Address:** 0x462B9bE8180d84A01587492C2317cE8A084535F7
 - **Manta Pacific Sepolia Contract Address:** 0x0a3f3287146ce135872DCc3c2e47b51a8D431a58
-- **Ethereum Sepolia Contract Address:**
 ### Steps to Deploy
 
 1. Install Truffle or Hardhat.
