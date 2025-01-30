@@ -138,7 +138,7 @@ export default function Home() {
       blockExplorerUrl: "https://sepolia-explorer.base.org",
     },
     "0x397": {
-      chainName: "Mode Testnet",
+      chainName: "Mode",
       rpcUrl: "https://sepolia.mode.network",
       blockExplorerUrl: "https://sepolia.explorer.mode.network",
     },
