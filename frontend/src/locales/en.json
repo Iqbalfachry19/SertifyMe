@@ -58,5 +58,8 @@
   "checkOutMyCertificate": "Check out my certificate",
   "from": "from",
   "aiAgents": "AI Agents",
-  "aiAgentsDesc": "Leverage advanced AI agents for creating certificate and certificate verification."
+  "aiAgentsDesc": "Leverage advanced AI agents for creating certificate and certificate verification.",
+   "customizeDesign": "Customize Design",
+    "enterDesignPrompt": "Enter your design prompt...",
+    "applyDesign": "Apply Design"
 }

@@ -58,5 +58,8 @@
   "checkOutMyCertificate": "Lihat sertifikat saya",
   "from": "dari",
    "aiAgents": "Agen AI",
-  "aiAgentsDesc": "Manfaatkan agen AI canggih untuk membuat sertifikat dan verifikasi sertifikat."
+  "aiAgentsDesc": "Manfaatkan agen AI canggih untuk membuat sertifikat dan verifikasi sertifikat.",
+   "customizeDesign": "Sesuaikan Desain",
+      "enterDesignPrompt": "Masukkan prompt desain Anda...",
+      "applyDesign": "Terapkan Desain"
 }

@@ -58,5 +58,8 @@
   "checkOutMyCertificate": "Lihat sijil saya",
   "from": "daripada",
    "aiAgents": "Ejen AI",
-  "aiAgentsDesc": "Manfaatkan ejen AI termaju untuk mencipta sijil dan pengesahan sijil."
+  "aiAgentsDesc": "Manfaatkan ejen AI termaju untuk mencipta sijil dan pengesahan sijil.",
+  "customizeDesign": "Sesuaikan Reka Bentuk",
+      "enterDesignPrompt": "Masukkan arahan reka bentuk anda...",
+      "applyDesign": "Terapkan Reka Bentuk"
 }

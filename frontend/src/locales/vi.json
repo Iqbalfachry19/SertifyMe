@@ -58,5 +58,8 @@
   "checkOutMyCertificate": "Xem chứng chỉ của tôi",
   "from": "từ",
    "aiAgents": "Đại lý AI",
-  "aiAgentsDesc": "Tận dụng các đại lý AI tiên tiến để tạo chứng chỉ và xác minh chứng chỉ."
+  "aiAgentsDesc": "Tận dụng các đại lý AI tiên tiến để tạo chứng chỉ và xác minh chứng chỉ.",
+  "customizeDesign": "Tùy chỉnh Thiết kế",
+      "enterDesignPrompt": "Nhập lời nhắc thiết kế của bạn...",
+      "applyDesign": "Áp dụng Thiết kế"
 }

@@ -62,6 +62,7 @@ function Footer() {
                     t("nft"),
                     t("verification"),
                     t("education"),
+                    t("aiAgents"),
                   ].map((item) => (
                     <li key={item}>
                       <a
