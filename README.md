@@ -104,7 +104,7 @@ module.exports = async function(deployer) {
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
 
-## Hackathon Team
+## Founder
 
 **Iqbal Fachry (Developer)**
 
