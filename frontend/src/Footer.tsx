@@ -4,6 +4,7 @@ import {
   FaInstagram,
   FaGithub,
   FaLinkedinIn,
+  FaTelegram,
 } from "react-icons/fa";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,11 @@ function Footer() {
     { name: "X", icon: AiOutlineTwitter, href: "https://x.com" },
     { name: "GitHub", icon: FaGithub, href: "https://github.com" },
     { name: "LinkedIn", icon: FaLinkedinIn, href: "https://linkedin.com" },
+    {
+      name: "Telegram",
+      icon: FaTelegram,
+      href: "https://t.me/+7NOo8h98moIyMzA9",
+    },
   ];
 
   const footerLinks = [
