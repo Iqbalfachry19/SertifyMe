@@ -81,16 +81,13 @@ The CertificationNFT contract is deployed on the Base Sepolia Testnet, Mode Sepo
 - **Manta Pacific Sepolia Contract Address:** 0x0a3f3287146ce135872DCc3c2e47b51a8D431a58
 ### Steps to Deploy
 
-1. Install Truffle or Hardhat.
+1. Install Foundry.
 2. Set up a connection to the Ethereum network (e.g., via Infura or Alchemy).
 3. Deploy the contract to your desired network.
 
-```javascript
-const CertificationNFT = artifacts.require("CertificationNFT");
-
-module.exports = async function(deployer) {
-  await deployer.deploy(CertificationNFT);
-};
+```sh
+source .env  
+forge script script/CertificationNFT.s.sol --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast  
 ```
 
 ## Future Enhancements
