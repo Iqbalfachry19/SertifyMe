@@ -100,16 +100,21 @@ export default function CertificateView({
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [designPrompt, setDesignPrompt] = useState("");
-  const [certificateStyle, setCertificateStyle] = useState({
-    backgroundColor: "bg-gradient-to-br from-blue-100 to-indigo-100",
-    textColor: "text-blue-800",
-    borderColor: "border-blue-500",
-    pdfColors: {
-      background: { start: [219, 234, 254], end: [224, 231, 255] },
-      text: [30, 64, 175],
-      border: [59, 130, 246],
-      header: [30, 64, 175],
-    },
+  const [certificateStyle, setCertificateStyle] = useState(() => {
+    const savedStyle = localStorage.getItem("certificateStyle");
+    return savedStyle
+      ? JSON.parse(savedStyle)
+      : {
+          backgroundColor: "bg-gradient-to-br from-blue-100 to-indigo-100",
+          textColor: "text-blue-800",
+          borderColor: "border-blue-500",
+          pdfColors: {
+            background: { start: [219, 234, 254], end: [224, 231, 255] },
+            text: [30, 64, 175],
+            border: [59, 130, 246],
+            header: [30, 64, 175],
+          },
+        };
   });
 
   useEffect(() => {
@@ -275,7 +280,11 @@ export default function CertificateView({
   const applyDesign = () => {
     const newStyle = simulateAIDesign(designPrompt);
     setCertificateStyle(newStyle);
+    localStorage.setItem("certificateStyle", JSON.stringify(newStyle));
   };
+  useEffect(() => {
+    localStorage.setItem("certificateStyle", JSON.stringify(certificateStyle));
+  }, [certificateStyle]);
   if (!certificates || certificates.length === 0) {
     return (
       <div className="text-center py-8">
