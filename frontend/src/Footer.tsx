@@ -14,11 +14,11 @@ function Footer() {
   const { t } = useTranslation();
 
   const socialLinks = [
-    { name: "Facebook", icon: FaFacebookF, href: "https://facebook.com" },
-    { name: "Instagram", icon: FaInstagram, href: "https://instagram.com" },
-    { name: "X", icon: AiOutlineTwitter, href: "https://x.com" },
-    { name: "GitHub", icon: FaGithub, href: "https://github.com" },
-    { name: "LinkedIn", icon: FaLinkedinIn, href: "https://linkedin.com" },
+    {
+      name: "GitHub",
+      icon: FaGithub,
+      href: "https://github.com/Iqbalfachry19/SertifyMe",
+    },
     {
       name: "Telegram",
       icon: FaTelegram,
