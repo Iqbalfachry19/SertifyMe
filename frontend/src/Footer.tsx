@@ -1,12 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaGithub,
-  FaLinkedinIn,
-  FaTelegram,
-} from "react-icons/fa";
-import { AiOutlineTwitter } from "react-icons/ai";
+import { FaGithub, FaTelegram } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 

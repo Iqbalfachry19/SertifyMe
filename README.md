@@ -21,7 +21,7 @@ Visit our website for more details: [SertifyMe Official Website](https://sertify
 - **Solidity:** Smart contract programming language used for writing the CertificationNFT contract.
 - **OpenZeppelin Contracts:** Industry-standard library providing reusable implementations of ERC721 and access control.
 - **Ethereum L2 Blockchain:** Deployed on the Ethereum L2 blockchain, ensuring decentralization and transparency.
-- **Sertifyme Ai Agents:**  An Eliza framework with goat sdk that integrates with blockchain applications to facilitate contract interactions, automation, and wallet management of CertificationNFT. [SertifyMe Ai Agents](https://github.com/Iqbalfachry19/sertifyme-ai-agents)
+- **Sertifyme Ai Agents:**  An Eliza framework with goat sdk that integrates with blockchain applications to facilitate contract interactions, automation, and wallet management of CertificationNFT. 
 
 ## Smart Contract Details
 
