@@ -1,7 +1,7 @@
 {
     "name": "sertifyMe",
     "clients": [],
-    "modelProvider": "nineteen_ai",
+    "modelProvider": "groq",
     "settings": {
         "voice": {
             "model": "en_GB-alan-medium"
