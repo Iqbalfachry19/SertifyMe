@@ -29,10 +29,6 @@ SertifyMe AI Agents empower organizations to manage, issue, and verify digital c
 ### Manually Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/Iqbalfachry19/sertifyme-ai-agents.git
-
-cd sertifyme-ai-agents
 pnpm i
 pnpm build
 pnpm start --characters="./characters/sertifyme.character.json"
