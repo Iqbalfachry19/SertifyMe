@@ -23,14 +23,14 @@
                 "user": "{{user1}}",
                 "content": {
                     "text": "pls Transfer CERT to",
-                    "action": "transfer_nft"
+                    "action": "TRANSFER_CERT"
                 }
             },
             {
                 "user": "SertifyMe",
                 "content": {
                     "text": "Transferring CERT to",
-                    "action": "transfer_nft"
+                    "action": "TRANSFER_CERT"
                 }
             }
         ]
