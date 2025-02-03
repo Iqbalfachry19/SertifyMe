@@ -1,50 +1,93 @@
-# React + TypeScript + Vite
+# SertifyMe Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SertifyMe is a web-based platform for managing and verifying digital certificates. This repository contains the frontend of SertifyMe, built using **React + Vite**.
 
-Currently, two official plugins are available:
+## 🚀 Features
+- Fast and lightweight React frontend powered by Vite
+- Responsive UI design for seamless user experience
+- Integration with backend APIs for certificate management
+- Secure authentication and authorization
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **React** - Frontend framework
+- **Vite** - Build tool for fast development
+- **Tailwind CSS** - Styling framework
+- **React Router** - Client-side routing
+- **Axios** - HTTP client for API requests
 
-## Expanding the ESLint configuration
+## 📦 Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yourusername/sertifyme-frontend.git
+   ```
 
-- Configure the top-level `parserOptions` property like this:
+2. Navigate to the project directory:
+   ```sh
+   cd sertifyme-frontend
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+3. Install dependencies:
+   ```sh
+   npm install
+   ```
+
+## 🚀 Running the Project
+
+Start the development server:
+```sh
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The application will be available at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## ⚙️ Environment Variables
+Create a `.env` file in the root directory and configure the following variables:
 ```
+VITE_API_BASE_URL=https://api.sertifyme.com
+VITE_AUTH_SECRET=your-auth-secret
+```
+
+## 📜 Folder Structure
+```
+sertifyme-frontend/
+├── src/
+│   ├── components/    # Reusable UI components
+│   ├── pages/         # Page components
+│   ├── hooks/         # Custom React hooks
+│   ├── services/      # API service calls
+│   ├── styles/        # Global styles
+│   ├── App.jsx        # Main app entry point
+│   ├── main.jsx       # Vite main entry file
+├── public/            # Static assets
+├── .env               # Environment variables
+├── package.json       # Project dependencies
+├── vite.config.js     # Vite configuration
+```
+
+## ✅ Build for Production
+To create an optimized production build:
+```sh
+npm run build
+```
+The build files will be generated in the `dist/` folder.
+
+## 🚀 Deployment
+To deploy the frontend, you can use services like:
+- **Vercel**
+- **Netlify**
+- **GitHub Pages**
+- **Cloudflare Pages**
+
+Example deployment to Vercel:
+```sh
+vercel deploy
+```
+
+
+## 📄 License
+This project is licensed under the **MIT License**.
+
+---
+💡 *SertifyMe - Secure Digital Certification Management*
+
