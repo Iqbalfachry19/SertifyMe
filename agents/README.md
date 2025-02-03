@@ -29,6 +29,7 @@ SertifyMe AI Agents empower organizations to manage, issue, and verify digital c
 ### Manually Start
 
 ```bash
+cd agents
 pnpm i
 pnpm build
 pnpm start --characters="./characters/sertifyme.character.json"
