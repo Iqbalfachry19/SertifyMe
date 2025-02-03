@@ -15,8 +15,7 @@ SertifyMe is a web-based platform for managing and verifying digital certificate
 - **Tailwind CSS** - Styling framework
 - **React Router** - Client-side routing
 - **Axios** - HTTP client for API requests
-- **AI Agents** - For intelligent automation
-- **Blockchain** - For secure and transparent certificate management
+
 
 ## 📦 Installation
 
