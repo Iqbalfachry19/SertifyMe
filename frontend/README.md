@@ -46,7 +46,7 @@ The application will be available at `http://localhost:5173`.
 ## ⚙️ Environment Variables
 Create a `.env` file in the root directory and configure the following variables:
 ```
-VITE_API_BASE_URL=
+VITE_BASE_URL=
 ```
 
 ## 📜 Folder Structure
