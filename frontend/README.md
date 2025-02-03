@@ -1,11 +1,12 @@
 # SertifyMe Frontend
 
-SertifyMe is a web-based platform for managing and verifying digital certificates. This repository contains the frontend of SertifyMe, built using **React + Vite**.
+SertifyMe is a web-based platform for managing and verifying digital certificates. This repository contains the frontend of SertifyMe, built using **React + Vite**, with **AI Agents** for automation and **Blockchain** for secure verification.
 
 ## 🚀 Features
 - Fast and lightweight React frontend powered by Vite
 - Responsive UI design for seamless user experience
-- Integration with backend APIs for certificate management
+- AI Agents for automated certificate validation
+- Blockchain integration for tamper-proof certificate verification
 - Secure authentication and authorization
 
 ## 🛠️ Tech Stack
@@ -14,6 +15,8 @@ SertifyMe is a web-based platform for managing and verifying digital certificate
 - **Tailwind CSS** - Styling framework
 - **React Router** - Client-side routing
 - **Axios** - HTTP client for API requests
+- **AI Agents** - For intelligent automation
+- **Blockchain** - For secure and transparent certificate management
 
 ## 📦 Installation
 
@@ -45,7 +48,6 @@ The application will be available at `http://localhost:5173`.
 Create a `.env` file in the root directory and configure the following variables:
 ```
 VITE_API_BASE_URL=https://api.sertifyme.com
-VITE_AUTH_SECRET=your-auth-secret
 ```
 
 ## 📜 Folder Structure
@@ -55,7 +57,6 @@ sertifyme-frontend/
 │   ├── components/    # Reusable UI components
 │   ├── pages/         # Page components
 │   ├── hooks/         # Custom React hooks
-│   ├── services/      # API service calls
 │   ├── styles/        # Global styles
 │   ├── App.jsx        # Main app entry point
 │   ├── main.jsx       # Vite main entry file
@@ -89,5 +90,5 @@ vercel deploy
 This project is licensed under the **MIT License**.
 
 ---
-💡 *SertifyMe - Secure Digital Certification Management*
+💡 *SertifyMe - AI-Powered, Blockchain-Secured Digital Certification Management*
 
