@@ -17,6 +17,22 @@ SertifyMe is a web-based platform for managing and verifying digital certificate
 - **Axios** - HTTP client for API requests
 
 
+## 📦 Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/Iqbalfachry19/SertifyMe.git
+   ```
+
+1. Navigate to the project directory:
+   ```sh
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
 
 ## 🚀 Running the Project
 
