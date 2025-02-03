@@ -51,7 +51,7 @@ VITE_BASE_URL=
 
 ## 📜 Folder Structure
 ```
-sertifyme-frontend/
+frontend/
 ├── src/
 │   ├── components/    # Reusable UI components
 │   ├── pages/         # Page components
