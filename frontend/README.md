@@ -56,7 +56,6 @@ sertifyme-frontend/
 │   ├── components/    # Reusable UI components
 │   ├── pages/         # Page components
 │   ├── hooks/         # Custom React hooks
-│   ├── styles/        # Global styles
 │   ├── App.jsx        # Main app entry point
 │   ├── main.jsx       # Vite main entry file
 ├── public/            # Static assets
