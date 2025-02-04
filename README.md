@@ -25,6 +25,7 @@ Visit our website for more details: [SertifyMe Official Website](https://sertify
 - **Phala Cloud:** Ai Agents deployed on TEE for privacy computing 
 - **React:** frontend framework
 - **Foundry:** solidity framework
+- **Tensorflow js:** Deep Learning Framework for Ai recommendation system
 
 ## Smart Contract Details
 
