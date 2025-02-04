@@ -23,8 +23,8 @@ Visit our website for more details: [SertifyMe Official Website](https://sertify
 - **Ethereum L2 Blockchain:** Deployed on the Ethereum L2 blockchain currently (mode network, base, and manta), ensuring decentralization and transparency.
 - **Sertifyme Ai Agents:**  An Eliza framework with goat sdk that integrates with blockchain applications to facilitate contract interactions, automation, and wallet management of CertificationNFT. 
 - **Phala Cloud:** Ai Agents deployed on TEE for privacy computing 
-- **React:** frontend framework
-- **Foundry:** solidity framework
+- **React:** Frontend Framework
+- **Foundry:** Solidity Framework
 - **Tensorflow js:** Deep Learning Framework for Ai recommendation system
 
 ## Smart Contract Details
