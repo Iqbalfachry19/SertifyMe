@@ -68,7 +68,7 @@ export default function Home() {
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
   const CONTRACT_ADDRESSES = {
-    "84532": "0xfd71381b49CA874D269eE45A84f25744a3F9433C", // Base Sepolia
+    "84532": "0x3D3e32E56D0a0E23721E4B3C231EA6920878c4ed", // Base Sepolia
     "919": "0x462B9bE8180d84A01587492C2317cE8A084535F7", // Mode Testnet
     "3441006": "0x0a3f3287146ce135872DCc3c2e47b51a8D431a58",
   } as const;

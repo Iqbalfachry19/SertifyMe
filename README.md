@@ -81,7 +81,7 @@ The contract is designed to mint NFTs representing certificates, containing key 
 The CertificationNFT contract is deployed on the Mode Sepolia Testnet, Base Sepolia Testnet, Manta Pacific Sepolia Testnet with the following contract address:
 
 - **Mode Sepolia Contract Address:** 0x462B9bE8180d84A01587492C2317cE8A084535F7
-- **Base Sepolia Contract Address:** 0xfd71381b49CA874D269eE45A84f25744a3F9433C
+- **Base Sepolia Contract Address:** 0x3D3e32E56D0a0E23721E4B3C231EA6920878c4ed
 - **Manta Pacific Sepolia Contract Address:** 0x0a3f3287146ce135872DCc3c2e47b51a8D431a58
 ### Steps to Deploy
 

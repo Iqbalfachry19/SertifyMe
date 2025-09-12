@@ -4,3 +4,11 @@ out = "out"
 libs = ["lib"]
 solc_version = "0.8.27"
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+
+remappings = [
+    '@layerzerolabs/onft-evm/=lib/devtools/packages/onft-evm/',
+    '@layerzerolabs/oapp-evm/=lib/devtools/packages/oapp-evm/',
+    '@layerzerolabs/lz-evm-protocol-v2/=lib/layerzero-v2/packages/layerzero-v2/evm/protocol',
+]
+[rpc_endpoints]
+baseSepolia = "https://sepolia.base.org"
