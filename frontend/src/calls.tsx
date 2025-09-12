@@ -1,5 +1,10 @@
 export const sertifymeContractAddress =
   "0x3D3e32E56D0a0E23721E4B3C231EA6920878c4ed";
+// const CONTRACT_ADDRESSES = {
+//   "84532": "0x3D3e32E56D0a0E23721E4B3C231EA6920878c4ed", // Base Sepolia
+//   "919": "0x462B9bE8180d84A01587492C2317cE8A084535F7",
+//   "3441006": "0x0a3f3287146ce135872DCc3c2e47b51a8D431a58",
+// } as const;
 export const sertifymeContractAbi = [
   { type: "constructor", inputs: [], stateMutability: "nonpayable" },
   {

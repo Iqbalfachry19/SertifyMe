@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, useEffect, useCallback } from "react";
-import { ethers, Contract } from "ethers";
+import { ethers } from "ethers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { NavLink } from "react-router";
 import { apiClient } from "@/lib/api";
-
 import {
   Menu,
   X,
@@ -47,26 +46,19 @@ import * as tf from "@tensorflow/tfjs";
 import { UUID } from "@elizaos/core";
 import { sertifymeContractAbi, sertifymeContractAddress } from "@/calls";
 import { ContractFunctionParameters } from "viem";
+import { useOwnedCertificates } from "@/hooks/useOwnedCertificates";
 
 interface AISuggestions {
   courseName: string;
   institutionName: string;
 }
 
-interface Certificate {
-  recipientName: string;
-  courseName: string;
-  institutionName: string;
-  issueDate: number; // Assuming this is a timestamp
-}
 export default function Home() {
   const [recipientAddress, setRecipientAddress] = useState<string>("");
   const [recipientName, setRecipientName] = useState<string>("");
   const [courseName, setCourseName] = useState<string>("");
   const [institutionName, setInstitutionName] = useState<string>("");
-  const [certificateData, setCertificateData] = useState<Certificate[]>([]); // Replace 'any' with a more specific type if known
   const [error, setError] = useState<string>("");
-  const [contract, setContract] = useState<Contract | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [currentView, setCurrentView] = useState<string>("home");
   const [showAlert, setShowAlert] = useState(false);
@@ -74,24 +66,26 @@ export default function Home() {
   const [aiSuggestions, setAiSuggestions] = useState<AISuggestions | null>(
     null
   );
-  const { address } = useAccount();
+
+  const {
+    certificateData,
+
+    refetch,
+  } = useOwnedCertificates();
 
   const [currentNetwork, setCurrentNetwork] = useState<string>("");
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
-  const CONTRACT_ADDRESSES = {
-    "84532": "0x3D3e32E56D0a0E23721E4B3C231EA6920878c4ed", // Base Sepolia
-    "919": "0x462B9bE8180d84A01587492C2317cE8A084535F7", // Mode Testnet
-    "3441006": "0x0a3f3287146ce135872DCc3c2e47b51a8D431a58",
-  } as const;
+
   const handleOnStatus = useCallback((status: LifecycleStatus) => {
     console.log("LifecycleStatus", status);
   }, []);
   const onMintSuccess = useCallback(() => {
     setShowAlert(true);
-    fetchCertificates();
+
     setActiveTab("view");
-  }, []);
+    refetch();
+  }, [refetch]);
   const onMintError = useCallback((e: unknown) => {
     console.log(e);
   }, []);
@@ -143,7 +137,7 @@ export default function Home() {
       </Sheet>
     );
   }
-  const getCurrentNetwork = async () => {
+  const getCurrentNetwork = useCallback(async () => {
     if (!window.ethereum) {
       alert("Please install MetaMask!");
       return;
@@ -160,8 +154,7 @@ export default function Home() {
     if (NETWORKS[chainIdHex as NetworkKeys]) {
       setCurrentNetwork(NETWORKS[chainIdHex as NetworkKeys].chainName);
     }
-  };
-  type ContractAddressKeys = keyof typeof CONTRACT_ADDRESSES;
+  }, []);
 
   const NETWORKS = {
     "0x14a34": {
@@ -187,51 +180,10 @@ export default function Home() {
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
   };
-  const initContract = async () => {
-    if (!window.ethereum) {
-      alert("Please install MetaMask!");
-      return;
-    }
-
-    const res = await fetch("/CertificationNFT.json");
-    const CertificationNFT = await res.json();
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-
-    // Get the current network chain ID
-    const network = await provider.getNetwork();
-    const chainId = network.chainId.toString();
-
-    // Determine the correct contract address based on the network
-    const contractAddress = CONTRACT_ADDRESSES[chainId as ContractAddressKeys];
-
-    if (!contractAddress) {
-      alert(
-        "Unsupported network. Please switch to Base Sepolia or Mode Testnet."
-      );
-      return;
-    }
-
-    // Initialize the contract with the correct address
-    const contractInstance = new ethers.Contract(
-      contractAddress,
-      CertificationNFT.abi,
-      signer
-    );
-
-    setContract(contractInstance);
-  };
 
   useEffect(() => {
     getCurrentNetwork();
-    initContract();
-  }, []);
-
-  useEffect(() => {
-    if (contract) {
-      fetchCertificates();
-    }
-  }, [contract]);
+  }, [getCurrentNetwork]);
 
   const switchToNetwork = async (chainId: string) => {
     if (typeof window.ethereum === "undefined") {
@@ -251,8 +203,6 @@ export default function Home() {
         params: [{ chainId }],
       });
 
-      // Re-initialize the contract with the new network
-      await initContract();
       await getCurrentNetwork();
 
       return true;
@@ -289,33 +239,6 @@ export default function Home() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-
-  const fetchCertificates = async () => {
-    if (!contract) {
-      setError("Contract not initialized");
-      return;
-    }
-
-    try {
-      const totalSupply = await contract._tokenIdCounter();
-      const certificates = [];
-
-      for (let i = 1; i < Number(totalSupply); i++) {
-        const owner = await contract.ownerOf(i);
-        console.log(owner);
-        if (owner.toLowerCase() === address?.toLowerCase()) {
-          const cert = await contract.getCertificate(i);
-          certificates.push(cert);
-        }
-      }
-
-      setCertificateData(certificates);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      }
-    }
-  };
 
   const fetchAISuggestions = () => {
     setIsLoadingAI(true);
