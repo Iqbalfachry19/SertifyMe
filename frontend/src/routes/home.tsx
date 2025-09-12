@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, useCallback } from "react";
 import { ethers, Contract } from "ethers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,14 @@ import {
   Sparkles,
   Globe,
 } from "lucide-react";
+import {
+  LifecycleStatus,
+  Transaction,
+  TransactionButton,
+  TransactionStatus,
+  TransactionStatusAction,
+  TransactionStatusLabel,
+} from "@coinbase/onchainkit/transaction";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   DropdownMenu,
@@ -29,7 +37,7 @@ import { Wallet, LogOut, Brain } from "lucide-react";
 import { WalletOptions } from "../wallet-options";
 import Logo from "../Logo";
 import HeroImage from "../HeroImage";
-import { useAccount, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect, useReadContract } from "wagmi";
 import { AlertPopup } from "../Alert";
 import { Alert, AlertDescription } from "../components/ui/alert";
 import Footer from "../Footer";
@@ -37,6 +45,8 @@ import CertificateView from "../cetification-view";
 import { useTranslation } from "react-i18next";
 import * as tf from "@tensorflow/tfjs";
 import { UUID } from "@elizaos/core";
+import { sertifymeContractAbi, sertifymeContractAddress } from "@/calls";
+import { ContractFunctionParameters } from "viem";
 interface AISuggestions {
   courseName: string;
   institutionName: string;
@@ -63,6 +73,7 @@ export default function Home() {
   const [aiSuggestions, setAiSuggestions] = useState<AISuggestions | null>(
     null
   );
+
   const [isMinting, setIsMinting] = useState(false);
   const [currentNetwork, setCurrentNetwork] = useState<string>("");
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
@@ -72,6 +83,26 @@ export default function Home() {
     "919": "0x462B9bE8180d84A01587492C2317cE8A084535F7", // Mode Testnet
     "3441006": "0x0a3f3287146ce135872DCc3c2e47b51a8D431a58",
   } as const;
+  const handleOnStatus = useCallback((status: LifecycleStatus) => {
+    console.log("LifecycleStatus", status);
+  }, []);
+  const onMintSuccess = useCallback(() => {
+    setShowAlert(true);
+    fetchCertificates();
+    setActiveTab("view");
+  }, []);
+  const onMintError = useCallback((e: any) => {
+    console.log(e);
+  }, []);
+  const submitMint = [
+    {
+      address: sertifymeContractAddress,
+      abi: sertifymeContractAbi,
+      functionName: "mintCertificate",
+      args: [recipientAddress, recipientName, courseName, institutionName],
+    },
+  ] as unknown as ContractFunctionParameters[];
+
   function ConnectWallet() {
     const { address, isConnected } = useAccount();
     const { disconnect } = useDisconnect();
@@ -257,32 +288,6 @@ export default function Home() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-  const mintCertificate = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!contract) {
-      setError("Contract not initialized");
-      return;
-    }
-    setIsMinting(true);
-    try {
-      const tx = await contract.mintCertificate(
-        recipientAddress,
-        recipientName,
-        courseName,
-        institutionName
-      );
-      await tx.wait();
-      setShowAlert(true);
-      fetchCertificates();
-      setActiveTab("view");
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      }
-    } finally {
-      setIsMinting(false);
-    }
-  };
 
   const fetchCertificates = async () => {
     if (!contract) {
@@ -306,6 +311,7 @@ export default function Home() {
       }
     }
   };
+
   const fetchAISuggestions = () => {
     setIsLoadingAI(true);
     setError("");
@@ -557,108 +563,122 @@ export default function Home() {
                 <CardTitle>{t("mintNewCertificate")}</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={mintCertificate} className="space-y-4">
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="recipientAddress"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      {t("recipientAddress")}
-                    </label>
-                    <Input
-                      id="recipientAddress"
-                      value={recipientAddress}
-                      onChange={(e) => setRecipientAddress(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="recipientName"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      {t("recipientName")}
-                    </label>
-                    <Input
-                      id="recipientName"
-                      value={recipientName}
-                      onChange={(e) => setRecipientName(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <Button
-                    type="button"
-                    onClick={fetchAISuggestions}
-                    disabled={isLoadingAI || !recipientName}
-                    className="w-full"
+                <div className="space-y-2">
+                  <label
+                    htmlFor="recipientAddress"
+                    className="text-sm font-medium text-gray-700"
                   >
-                    {isLoadingAI ? (
-                      t("generating")
-                    ) : (
-                      <>
-                        <Sparkles className="mr-2 h-4 w-4" />
-                        {t("generateAISuggestions")}
-                      </>
-                    )}
-                  </Button>
-                  {aiSuggestions && (
-                    <div className="space-y-2 p-4 bg-blue-50 rounded-md">
-                      <p className="text-sm font-medium text-blue-800">
-                        {t("aiSuggestions")}:
-                      </p>
-                      <p className="text-sm text-blue-700">
-                        {t("course")}: {aiSuggestions.courseName}
-                      </p>
-                      <p className="text-sm text-blue-700">
-                        {t("institution")}: {aiSuggestions.institutionName}
-                      </p>
-                      <div className="flex space-x-2">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            setCourseName(aiSuggestions.courseName);
-                            setInstitutionName(aiSuggestions.institutionName);
-                          }}
-                        >
-                          {t("useSuggestions")}
-                        </Button>
-                      </div>
-                    </div>
+                    {t("recipientAddress")}
+                  </label>
+                  <Input
+                    id="recipientAddress"
+                    value={recipientAddress}
+                    onChange={(e) => setRecipientAddress(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label
+                    htmlFor="recipientName"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    {t("recipientName")}
+                  </label>
+                  <Input
+                    id="recipientName"
+                    value={recipientName}
+                    onChange={(e) => setRecipientName(e.target.value)}
+                    required
+                  />
+                </div>
+                <Button
+                  type="button"
+                  onClick={fetchAISuggestions}
+                  disabled={isLoadingAI || !recipientName}
+                  className="w-full mt-5"
+                >
+                  {isLoadingAI ? (
+                    t("generating")
+                  ) : (
+                    <>
+                      <Sparkles className="mr-2 h-4 w-4" />
+                      {t("generateAISuggestions")}
+                    </>
                   )}
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="courseName"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      {t("courseName")}
-                    </label>
-                    <Input
-                      id="courseName"
-                      value={courseName}
-                      onChange={(e) => setCourseName(e.target.value)}
-                      required
-                    />
+                </Button>
+                {aiSuggestions && (
+                  <div className="space-y-2 p-4 bg-blue-50 rounded-md">
+                    <p className="text-sm font-medium text-blue-800">
+                      {t("aiSuggestions")}:
+                    </p>
+                    <p className="text-sm text-blue-700">
+                      {t("course")}: {aiSuggestions.courseName}
+                    </p>
+                    <p className="text-sm text-blue-700">
+                      {t("institution")}: {aiSuggestions.institutionName}
+                    </p>
+                    <div className="flex space-x-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setCourseName(aiSuggestions.courseName);
+                          setInstitutionName(aiSuggestions.institutionName);
+                        }}
+                      >
+                        {t("useSuggestions")}
+                      </Button>
+                    </div>
                   </div>
-                  <div className="space-y-2">
-                    <label
-                      htmlFor="institutionName"
-                      className="text-sm font-medium text-gray-700"
-                    >
-                      {t("institutionName")}
-                    </label>
-                    <Input
-                      id="institutionName"
-                      value={institutionName}
-                      onChange={(e) => setInstitutionName(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={isMinting}>
-                    {t("mintCertificate")}
-                  </Button>
-                </form>
+                )}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="courseName"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    {t("courseName")}
+                  </label>
+                  <Input
+                    id="courseName"
+                    value={courseName}
+                    onChange={(e) => setCourseName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label
+                    htmlFor="institutionName"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    {t("institutionName")}
+                  </label>
+                  <Input
+                    id="institutionName"
+                    value={institutionName}
+                    onChange={(e) => setInstitutionName(e.target.value)}
+                    required
+                  />
+                </div>
+                <Transaction
+                  calls={submitMint}
+                  chainId={84532}
+                  onStatus={handleOnStatus}
+                  onSuccess={onMintSuccess}
+                  onError={(e) => onMintError(e)}
+                >
+                  <TransactionButton
+                    text={t("mintCertificate")}
+                    pendingOverride={{ text: "minting..." }}
+                    className="w-full bg-black text-white mt-5 hover:bg-gray-700 disabled:bg-gray-400"
+                  />
+
+                  <TransactionStatus className="mt-2">
+                    <TransactionStatusAction />
+                    <TransactionStatusLabel />
+                  </TransactionStatus>
+                </Transaction>
+
                 {error && (
                   <Alert variant="destructive" className="mt-4">
                     <AlertCircle className="h-4 w-4" />
