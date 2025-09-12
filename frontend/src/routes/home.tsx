@@ -47,6 +47,7 @@ import * as tf from "@tensorflow/tfjs";
 import { UUID } from "@elizaos/core";
 import { sertifymeContractAbi, sertifymeContractAddress } from "@/calls";
 import { ContractFunctionParameters } from "viem";
+
 interface AISuggestions {
   courseName: string;
   institutionName: string;
@@ -73,6 +74,7 @@ export default function Home() {
   const [aiSuggestions, setAiSuggestions] = useState<AISuggestions | null>(
     null
   );
+  const { address } = useAccount();
 
   const [currentNetwork, setCurrentNetwork] = useState<string>("");
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
@@ -90,7 +92,7 @@ export default function Home() {
     fetchCertificates();
     setActiveTab("view");
   }, []);
-  const onMintError = useCallback((e: any) => {
+  const onMintError = useCallback((e: unknown) => {
     console.log(e);
   }, []);
   const submitMint = [
@@ -299,8 +301,12 @@ export default function Home() {
       const certificates = [];
 
       for (let i = 1; i < Number(totalSupply); i++) {
-        const cert = await contract.getCertificate(i);
-        certificates.push(cert);
+        const owner = await contract.ownerOf(i);
+        console.log(owner);
+        if (owner.toLowerCase() === address?.toLowerCase()) {
+          const cert = await contract.getCertificate(i);
+          certificates.push(cert);
+        }
       }
 
       setCertificateData(certificates);
