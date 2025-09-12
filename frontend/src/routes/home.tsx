@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, FormEvent, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ethers, Contract } from "ethers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +37,7 @@ import { Wallet, LogOut, Brain } from "lucide-react";
 import { WalletOptions } from "../wallet-options";
 import Logo from "../Logo";
 import HeroImage from "../HeroImage";
-import { useAccount, useDisconnect, useReadContract } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { AlertPopup } from "../Alert";
 import { Alert, AlertDescription } from "../components/ui/alert";
 import Footer from "../Footer";
@@ -74,7 +74,6 @@ export default function Home() {
     null
   );
 
-  const [isMinting, setIsMinting] = useState(false);
   const [currentNetwork, setCurrentNetwork] = useState<string>("");
   const [isLoadingAI, setIsLoadingAI] = useState<boolean>(false);
   const { t, i18n } = useTranslation();
